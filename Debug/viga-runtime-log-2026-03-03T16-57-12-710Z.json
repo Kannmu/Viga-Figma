@@ -1,0 +1,1945 @@
+{
+  "schemaVersion": "v1",
+  "exportedAt": "2026-03-03T16:57:12.710Z",
+  "plugin": {
+    "source": "plugin",
+    "exportedAt": "2026-03-03T16:57:12.700Z",
+    "entryCount": 13
+  },
+  "ui": {
+    "sessionStartedAt": "2026-03-03T16:53:35.222Z",
+    "entryCount": 66,
+    "messageCount": 2
+  },
+  "selectionSnapshot": {
+    "pageId": "840:2",
+    "pageName": "Meta-Ultra & SWI & SWIM",
+    "selectionCount": 1,
+    "selectedNodeIds": [
+      "1261:208"
+    ],
+    "selectedNodeSummaries": [
+      {
+        "nodeId": "1261:208",
+        "nodeType": "FRAME",
+        "name": "Frame 11",
+        "bounds": {
+          "x": -1260,
+          "y": 638,
+          "width": 419,
+          "height": 77
+        }
+      }
+    ],
+    "selectedNodesDsl": "<Frame id=\"1261:208\" name=\"Frame 11\" x=\"-1260\" y=\"638\" pos=\"-1260,638\" width=\"419\" height=\"77\" size=\"419x77\" opacity=\"1\" radius=\"0\" fill=\"#ffffff\" strokeWidth=\"1\" />",
+    "selectedBounds": [
+      {
+        "x": -1260,
+        "y": 638,
+        "width": 419,
+        "height": 77
+      }
+    ]
+  },
+  "settingsSnapshot": {
+    "provider": "openai",
+    "baseUrl": "https://zenmux.ai/api/v1",
+    "model": "google/gemini-3.1-pro-preview",
+    "temperature": 0.8,
+    "hasApiKey": true,
+    "systemPromptLength": 112
+  },
+  "conversationSnapshot": [
+    {
+      "index": 0,
+      "role": "user",
+      "contentParts": 2,
+      "content": [
+        {
+          "type": "text",
+          "length": 36,
+          "preview": "帮我在这个 Frame 中使用矢量元素详细精确的的复刻我上传的这张图片。"
+        },
+        {
+          "type": "image_url",
+          "detail": "auto",
+          "urlLength": 1204706
+        }
+      ]
+    },
+    {
+      "index": 1,
+      "role": "assistant",
+      "contentLength": 0,
+      "contentPreview": "",
+      "toolCalls": []
+    }
+  ],
+  "runtime": [
+    {
+      "source": "plugin",
+      "seq": 1,
+      "timestamp": "2026-03-03T16:53:35.190Z",
+      "timestampMs": 1772556815190,
+      "event": "plugin.ui.shown",
+      "detail": {
+        "width": 440,
+        "height": 720,
+        "themeColors": true
+      },
+      "mergedIndex": 1
+    },
+    {
+      "source": "ui",
+      "seq": 1,
+      "timestamp": "2026-03-03T16:53:35.223Z",
+      "timestampMs": 1772556815223,
+      "event": "ui.init.start",
+      "detail": {},
+      "mergedIndex": 2
+    },
+    {
+      "source": "ui",
+      "seq": 2,
+      "timestamp": "2026-03-03T16:53:35.223Z",
+      "timestampMs": 1772556815223,
+      "event": "rpc.request.sent",
+      "detail": {
+        "requestId": "rpc_1772556815223_0",
+        "action": "bootstrap",
+        "payload": {}
+      },
+      "mergedIndex": 3
+    },
+    {
+      "source": "plugin",
+      "seq": 2,
+      "timestamp": "2026-03-03T16:53:35.233Z",
+      "timestampMs": 1772556815233,
+      "event": "rpc.request.received",
+      "detail": {
+        "requestId": "rpc_1772556815223_0",
+        "action": "bootstrap",
+        "payload": {}
+      },
+      "mergedIndex": 4
+    },
+    {
+      "source": "ui",
+      "seq": 3,
+      "timestamp": "2026-03-03T16:53:35.233Z",
+      "timestampMs": 1772556815233,
+      "event": "plugin.event.received",
+      "detail": {
+        "event": "runtime-log-entry",
+        "payload": {
+          "source": "plugin",
+          "seq": 1,
+          "timestamp": "2026-03-03T16:53:35.190Z",
+          "timestampMs": 1772556815190,
+          "event": "plugin.ui.shown",
+          "detail": {
+            "width": 440,
+            "height": 720,
+            "themeColors": true
+          }
+        }
+      },
+      "mergedIndex": 5
+    },
+    {
+      "source": "ui",
+      "seq": 4,
+      "timestamp": "2026-03-03T16:53:35.233Z",
+      "timestampMs": 1772556815233,
+      "event": "plugin.runtime-log.stream",
+      "detail": {
+        "pluginSeq": 1,
+        "pluginEvent": "plugin.ui.shown"
+      },
+      "mergedIndex": 6
+    },
+    {
+      "source": "ui",
+      "seq": 5,
+      "timestamp": "2026-03-03T16:53:35.236Z",
+      "timestampMs": 1772556815236,
+      "event": "plugin.event.received",
+      "detail": {
+        "event": "runtime-log-entry",
+        "payload": {
+          "source": "plugin",
+          "seq": 2,
+          "timestamp": "2026-03-03T16:53:35.233Z",
+          "timestampMs": 1772556815233,
+          "event": "rpc.request.received",
+          "detail": {
+            "requestId": "rpc_1772556815223_0",
+            "action": "bootstrap",
+            "payload": {}
+          }
+        }
+      },
+      "mergedIndex": 7
+    },
+    {
+      "source": "ui",
+      "seq": 6,
+      "timestamp": "2026-03-03T16:53:35.236Z",
+      "timestampMs": 1772556815236,
+      "event": "plugin.runtime-log.stream",
+      "detail": {
+        "pluginSeq": 2,
+        "pluginEvent": "rpc.request.received"
+      },
+      "mergedIndex": 8
+    },
+    {
+      "source": "plugin",
+      "seq": 3,
+      "timestamp": "2026-03-03T16:53:35.254Z",
+      "timestampMs": 1772556815254,
+      "event": "rpc.request.succeeded",
+      "detail": {
+        "requestId": "rpc_1772556815223_0",
+        "action": "bootstrap",
+        "response": {
+          "settings": {
+            "baseUrl": "https://zenmux.ai/api/v1",
+            "apiKey": "[REDACTED]",
+            "model": "qwen/qwen3.5-plus",
+            "systemPrompt": "You are Viga, an expert Figma design agent. Prefer using provided tools to inspect and edit the document safely.",
+            "temperature": 0.8,
+            "provider": "openai"
+          },
+          "selection": {
+            "pageId": "840:2",
+            "pageName": "Meta-Ultra & SWI & SWIM",
+            "selectionCount": 1,
+            "selectedNodeIds": [
+              "1261:163"
+            ],
+            "selectedNodeSummaries": [
+              {
+                "nodeId": "1261:163",
+                "nodeType": "FRAME",
+                "name": "Design Container",
+                "bounds": {
+                  "x": -1201,
+                  "y": -98,
+                  "width": 1100,
+                  "height": 600
+                }
+              }
+            ],
+            "selectedNodesDsl": "<Frame id=\"1261:163\" name=\"Design Container\" x=\"-1201\" y=\"-98\" pos=\"-1201,-98\" width=\"1100\" height=\"600\" size=\"1100x600\" opacity=\"1\" radius=\"0\" fill=\"#000000\" strokeWidth=\"1\">\n  <Frame id=\"1261:164\" name=\"Fixation Container\" x=\"0\" y=\"0\" pos=\"0,0\" width=\"500\" height=\"550\" size=\"500x550\" opacity=\"1\" radius=\"0\" fill=\"#000000\" strokeWidth=\"1\">\n    <Text id=\"1261:165\" name=\"Fixation\" x=\"180\" y=\"20\" pos=\"180,20\" width=\"140\" height=\"30\" size=\"140x30\" opacity=\"1\" fill=\"#f4a460\" strokeWidth=\"1\" fontSize=\"24\" fontFamily=\"Inter\" weight=\"Regular\" />\n    <Frame id=\"1261:166\" name=\"Left Screen\" x=\"10\" y=\"60\" pos=\"10,60\" width=\"480\" height=\"380\" size=\"480x380\" opacity=\"1\" radius=\"20\" fill=\"#ffffff\" stroke=\"#cccccc\" strokeWidth=\"2\" />\n    <Text id=\"1261:185\" name=\"Visual Occlusion\" x=\"140\" y=\"470\" pos=\"140,470\" width=\"220\" height=\"30\" size=\"220x30\" opacity=\"1\" fill=\"#f4a460\" strokeWidth=\"1\" fontSize=\"18\" fontFamily=\"Inter\" weight=\"Regular\" />\n    <Frame id=\"1261:186\" name=\"Gray Bar\" x=\"120\" y=\"505\" pos=\"120,505\" width=\"260\" height=\"15\" size=\"260x15\" opacity=\"1\" radius=\"3\" fill=\"#424242\" strokeWidth=\"1\" />\n  </Frame>\n  <Frame id=\"1261:187\" name=\"Divider\" x=\"510\" y=\"0\" pos=\"510,0\" width=\"4\" height=\"550\" size=\"4x550\" opacity=\"1\" radius=\"2\" fill=\"#666666\" strokeWidth=\"1\" />\n  <Frame id=\"1261:188\" name=\"Cross-Boundary Container\" x=\"540\" y=\"0\" pos=\"540,0\" width=\"550\" height=\"550\" size=\"550x550\" opacity=\"1\" radius=\"0\" fill=\"#000000\" strokeWidth=\"1\">\n    <Text id=\"1261:189\" name=\"Cross-Boundary\" x=\"150\" y=\"20\" pos=\"150,20\" width=\"250\" height=\"30\" size=\"250x30\" opacity=\"1\" fill=\"#5b9bd5\" strokeWidth=\"1\" fontSize=\"24\" fontFamily=\"Inter\" weight=\"Regular\" />\n    <Frame id=\"1261:190\" name=\"Right Screen\" x=\"20\" y=\"60\" pos=\"20,60\" width=\"480\" height=\"380\" size=\"480x380\" opacity=\"1\" radius=\"20\" fill=\"#ffffff\" stroke=\"#cccccc\" strokeWidth=\"2\" />\n    <Frame id=\"1261:205\" name=\"Anchor Base\" x=\"200\" y=\"480\" pos=\"200,480\" width=\"150\" height=\"60\" size=\"150x60\" opacity=\"1\" radius=\"0\" fill=\"#424242\" strok...[truncated 23 chars]",
+            "selectedBounds": [
+              {
+                "x": -1201,
+                "y": -98,
+                "width": 1100,
+                "height": 600
+              }
+            ]
+          }
+        }
+      },
+      "mergedIndex": 9
+    },
+    {
+      "source": "ui",
+      "seq": 7,
+      "timestamp": "2026-03-03T16:53:35.256Z",
+      "timestampMs": 1772556815256,
+      "event": "plugin.event.received",
+      "detail": {
+        "event": "runtime-log-entry",
+        "payload": {
+          "source": "plugin",
+          "seq": 3,
+          "timestamp": "2026-03-03T16:53:35.254Z",
+          "timestampMs": 1772556815254,
+          "event": "rpc.request.succeeded",
+          "detail": {
+            "requestId": "rpc_1772556815223_0",
+            "action": "bootstrap",
+            "response": {
+              "settings": {
+                "baseUrl": "https://zenmux.ai/api/v1",
+                "apiKey": "[REDACTED]",
+                "model": "qwen/qwen3.5-plus",
+                "systemPrompt": "You are Viga, an expert Figma design agent. Prefer using provided tools to inspect and edit the document safely.",
+                "temperature": 0.8,
+                "provider": "openai"
+              },
+              "selection": {
+                "pageId": "840:2",
+                "pageName": "Meta-Ultra & SWI & SWIM",
+                "selectionCount": 1,
+                "selectedNodeIds": [
+                  "1261:163"
+                ],
+                "selectedNodeSummaries": [
+                  {
+                    "nodeId": "[depth-truncated]",
+                    "nodeType": "[depth-truncated]",
+                    "name": "[depth-truncated]",
+                    "bounds": "[depth-truncated]"
+                  }
+                ],
+                "selectedNodesDsl": "<Frame id=\"1261:163\" name=\"Design Container\" x=\"-1201\" y=\"-98\" pos=\"-1201,-98\" width=\"1100\" height=\"600\" size=\"1100x600\" opacity=\"1\" radius=\"0\" fill=\"#000000\" strokeWidth=\"1\">\n  <Frame id=\"1261:164\" name=\"Fixation Container\" x=\"0\" y=\"0\" pos=\"0,0\" width=\"500\" height=\"550\" size=\"500x550\" opacity=\"1\" radius=\"0\" fill=\"#000000\" strokeWidth=\"1\">\n    <Text id=\"1261:165\" name=\"Fixation\" x=\"180\" y=\"20\" pos=\"180,20\" width=\"140\" height=\"30\" size=\"140x30\" opacity=\"1\" fill=\"#f4a460\" strokeWidth=\"1\" fontSize=\"24\" fontFamily=\"Inter\" weight=\"Regular\" />\n    <Frame id=\"1261:166\" name=\"Left Screen\" x=\"10\" y=\"60\" pos=\"10,60\" width=\"480\" height=\"380\" size=\"480x380\" opacity=\"1\" radius=\"20\" fill=\"#ffffff\" stroke=\"#cccccc\" strokeWidth=\"2\" />\n    <Text id=\"1261:185\" name=\"Visual Occlusion\" x=\"140\" y=\"470\" pos=\"140,470\" width=\"220\" height=\"30\" size=\"220x30\" opacity=\"1\" fill=\"#f4a460\" strokeWidth=\"1\" fontSize=\"18\" fontFamily=\"Inter\" weight=\"Regular\" />\n    <Frame id=\"1261:186\" name=\"Gray Bar\" x=\"120\" y=\"505\" pos=\"120,505\" width=\"260\" height=\"15\" size=\"260x15\" opacity=\"1\" radius=\"3\" fill=\"#424242\" strokeWidth=\"1\" />\n  </Frame>\n  <Frame id=\"1261:187\" name=\"Divider\" x=\"510\" y=\"0\" pos=\"510,0\" width=\"4\" height=\"550\" size=\"4x550\" opacity=\"1\" radius=\"2\" fill=\"#666666\" strokeWidth=\"1\" />\n  <Frame id=\"1261:188\" name=\"Cross-Boundary Container\" x=\"540\" y=\"0\" pos=\"540,0\" width=\"550\" height=\"550\" size=\"550x550\" opacity=\"1\" radius=\"0\" fill=\"#000000\" strokeWidth=\"1\">\n    <Text id=\"1261:189\" name=\"Cross-Boundary\" x=\"150\" y=\"20\" pos=\"150,20\" width=\"250\" height=\"30\" size=\"250x30\" opacity=\"1\" fill=\"#5b9bd5\" strokeWidth=\"1\" fontSize=\"24\" fontFamily=\"Inter\" weight=\"Regular\" />\n    <Frame id=\"1261:190\" name=\"Right Screen\" x=\"20\" y=\"60\" pos=\"20,60\" width=\"480\" height=\"380\" size=\"480x380\" opacity=\"1\" radius=\"20\" fill=\"#ffffff\" stroke=\"#cccccc\" strokeWidth=\"2\" />\n    <Frame id=\"1261:205\" name=\"Anchor Base\" x=\"200\" y=\"480\" pos=\"200,480\" width=\"150\" height=\"60\" size=\"150x60\" opacity=\"1\" radius=\"0\" fill=\"#424242\" strok...[truncated 23 chars]",
+                "selectedBounds": [
+                  {
+                    "x": "[depth-truncated]",
+                    "y": "[depth-truncated]",
+                    "width": "[depth-truncated]",
+                    "height": "[depth-truncated]"
+                  }
+                ]
+              }
+            }
+          }
+        }
+      },
+      "mergedIndex": 10
+    },
+    {
+      "source": "ui",
+      "seq": 8,
+      "timestamp": "2026-03-03T16:53:35.256Z",
+      "timestampMs": 1772556815256,
+      "event": "plugin.runtime-log.stream",
+      "detail": {
+        "pluginSeq": 3,
+        "pluginEvent": "rpc.request.succeeded"
+      },
+      "mergedIndex": 11
+    },
+    {
+      "source": "ui",
+      "seq": 9,
+      "timestamp": "2026-03-03T16:53:35.257Z",
+      "timestampMs": 1772556815257,
+      "event": "rpc.response.ok",
+      "detail": {
+        "requestId": "rpc_1772556815223_0",
+        "action": "bootstrap",
+        "durationMs": 34,
+        "data": {
+          "settings": {
+            "baseUrl": "https://zenmux.ai/api/v1",
+            "apiKey": "[REDACTED]",
+            "model": "qwen/qwen3.5-plus",
+            "systemPrompt": "You are Viga, an expert Figma design agent. Prefer using provided tools to inspect and edit the document safely.",
+            "temperature": 0.8,
+            "provider": "openai"
+          },
+          "selection": {
+            "pageId": "840:2",
+            "pageName": "Meta-Ultra & SWI & SWIM",
+            "selectionCount": 1,
+            "selectedNodeIds": [
+              "1261:163"
+            ],
+            "selectedNodeSummaries": [
+              {
+                "nodeId": "1261:163",
+                "nodeType": "FRAME",
+                "name": "Design Container",
+                "bounds": {
+                  "x": -1201,
+                  "y": -98,
+                  "width": 1100,
+                  "height": 600
+                }
+              }
+            ],
+            "selectedNodesDsl": "<Frame id=\"1261:163\" name=\"Design Container\" x=\"-1201\" y=\"-98\" pos=\"-1201,-98\" width=\"1100\" height=\"600\" size=\"1100x600\" opacity=\"1\" radius=\"0\" fill=\"#000000\" strokeWidth=\"1\">\n  <Frame id=\"1261:164\" name=\"Fixation Container\" x=\"0\" y=\"0\" pos=\"0,0\" width=\"500\" height=\"550\" size=\"500x550\" opacity=\"1\" radius=\"0\" fill=\"#000000\" strokeWidth=\"1\">\n    <Text id=\"1261:165\" name=\"Fixation\" x=\"180\" y=\"20\" pos=\"180,20\" width=\"140\" height=\"30\" size=\"140x30\" opacity=\"1\" fill=\"#f4a460\" strokeWidth=\"1\" fontSize=\"24\" fontFamily=\"Inter\" weight=\"Regular\" />\n    <Frame id=\"1261:166\" name=\"Left Screen\" x=\"10\" y=\"60\" pos=\"10,60\" width=\"480\" height=\"380\" size=\"480x380\" opacity=\"1\" radius=\"20\" fill=\"#ffffff\" stroke=\"#cccccc\" strokeWidth=\"2\" />\n    <Text id=\"1261:185\" name=\"Visual Occlusion\" x=\"140\" y=\"470\" pos=\"140,470\" width=\"220\" height=\"30\" size=\"220x30\" opacity=\"1\" fill=\"#f4a460\" strokeWidth=\"1\" fontSize=\"18\" fontFamily=\"Inter\" weight=\"Regular\" />\n    <Frame id=\"1261:186\" name=\"Gray Bar\" x=\"120\" y=\"505\" pos=\"120,505\" width=\"260\" height=\"15\" size=\"260x15\" opacity=\"1\" radius=\"3\" fill=\"#424242\" strokeWidth=\"1\" />\n  </Frame>\n  <Frame id=\"1261:187\" name=\"Divider\" x=\"510\" y=\"0\" pos=\"510,0\" width=\"4\" height=\"550\" size=\"4x550\" opacity=\"1\" radius=\"2\" fill=\"#666666\" strokeWidth=\"1\" />\n  <Frame id=\"1261:188\" name=\"Cross-Boundary Container\" x=\"540\" y=\"0\" pos=\"540,0\" width=\"550\" height=\"550\" size=\"550x550\" opacity=\"1\" radius=\"0\" fill=\"#000000\" strokeWidth=\"1\">\n    <Text id=\"1261:189\" name=\"Cross-Boundary\" x=\"150\" y=\"20\" pos=\"150,20\" width=\"250\" height=\"30\" size=\"250x30\" opacity=\"1\" fill=\"#5b9bd5\" strokeWidth=\"1\" fontSize=\"24\" fontFamily=\"Inter\" weight=\"Regular\" />\n    <Frame id=\"1261:190\" name=\"Right Screen\" x=\"20\" y=\"60\" pos=\"20,60\" width=\"480\" height=\"380\" size=\"480x380\" opacity=\"1\" radius=\"20\" fill=\"#ffffff\" stroke=\"#cccccc\" strokeWidth=\"2\" />\n    <Frame id=\"1261:205\" name=\"Anchor Base\" x=\"200\" y=\"480\" pos=\"200,480\" width=\"150\" height=\"60\" size=\"150x60\" opacity=\"1\" radius=\"0\" fill=\"#424242\" strok...[truncated 23 chars]",
+            "selectedBounds": [
+              {
+                "x": -1201,
+                "y": -98,
+                "width": 1100,
+                "height": 600
+              }
+            ]
+          }
+        }
+      },
+      "mergedIndex": 12
+    },
+    {
+      "source": "ui",
+      "seq": 10,
+      "timestamp": "2026-03-03T16:53:35.257Z",
+      "timestampMs": 1772556815257,
+      "event": "ui.init.bootstrap-loaded",
+      "detail": {
+        "hasApiKey": "[REDACTED]",
+        "model": "qwen/qwen3.5-plus",
+        "selectionCount": 1
+      },
+      "mergedIndex": 13
+    },
+    {
+      "source": "ui",
+      "seq": 11,
+      "timestamp": "2026-03-03T16:53:35.257Z",
+      "timestampMs": 1772556815257,
+      "event": "ui.chat.message",
+      "detail": {
+        "role": "assistant",
+        "textLength": 112,
+        "hasThinking": false
+      },
+      "mergedIndex": 14
+    },
+    {
+      "source": "ui",
+      "seq": 12,
+      "timestamp": "2026-03-03T16:53:35.259Z",
+      "timestampMs": 1772556815259,
+      "event": "ui.init.done",
+      "detail": {},
+      "mergedIndex": 15
+    },
+    {
+      "source": "ui",
+      "seq": 13,
+      "timestamp": "2026-03-03T16:53:40.471Z",
+      "timestampMs": 1772556820471,
+      "event": "rpc.request.sent",
+      "detail": {
+        "requestId": "rpc_1772556820471_1",
+        "action": "save-settings",
+        "payload": {
+          "provider": "openai",
+          "baseUrl": "https://zenmux.ai/api/v1",
+          "apiKey": "[REDACTED]",
+          "model": "google/gemini-3.1-pro-preview",
+          "temperature": 0.8,
+          "systemPrompt": "You are Viga, an expert Figma design agent. Prefer using provided tools to inspect and edit the document safely."
+        }
+      },
+      "mergedIndex": 16
+    },
+    {
+      "source": "plugin",
+      "seq": 4,
+      "timestamp": "2026-03-03T16:53:40.477Z",
+      "timestampMs": 1772556820477,
+      "event": "rpc.request.received",
+      "detail": {
+        "requestId": "rpc_1772556820471_1",
+        "action": "save-settings",
+        "payload": {
+          "provider": "openai",
+          "baseUrl": "https://zenmux.ai/api/v1",
+          "apiKey": "[REDACTED]",
+          "model": "google/gemini-3.1-pro-preview",
+          "temperature": 0.8,
+          "systemPrompt": "You are Viga, an expert Figma design agent. Prefer using provided tools to inspect and edit the document safely."
+        }
+      },
+      "mergedIndex": 17
+    },
+    {
+      "source": "ui",
+      "seq": 14,
+      "timestamp": "2026-03-03T16:53:40.481Z",
+      "timestampMs": 1772556820481,
+      "event": "plugin.event.received",
+      "detail": {
+        "event": "runtime-log-entry",
+        "payload": {
+          "source": "plugin",
+          "seq": 4,
+          "timestamp": "2026-03-03T16:53:40.477Z",
+          "timestampMs": 1772556820477,
+          "event": "rpc.request.received",
+          "detail": {
+            "requestId": "rpc_1772556820471_1",
+            "action": "save-settings",
+            "payload": {
+              "provider": "openai",
+              "baseUrl": "https://zenmux.ai/api/v1",
+              "apiKey": "[REDACTED]",
+              "model": "google/gemini-3.1-pro-preview",
+              "temperature": 0.8,
+              "systemPrompt": "You are Viga, an expert Figma design agent. Prefer using provided tools to inspect and edit the document safely."
+            }
+          }
+        }
+      },
+      "mergedIndex": 18
+    },
+    {
+      "source": "ui",
+      "seq": 15,
+      "timestamp": "2026-03-03T16:53:40.481Z",
+      "timestampMs": 1772556820481,
+      "event": "plugin.runtime-log.stream",
+      "detail": {
+        "pluginSeq": 4,
+        "pluginEvent": "rpc.request.received"
+      },
+      "mergedIndex": 19
+    },
+    {
+      "source": "plugin",
+      "seq": 5,
+      "timestamp": "2026-03-03T16:53:40.483Z",
+      "timestampMs": 1772556820483,
+      "event": "rpc.request.succeeded",
+      "detail": {
+        "requestId": "rpc_1772556820471_1",
+        "action": "save-settings",
+        "response": {
+          "success": true
+        }
+      },
+      "mergedIndex": 20
+    },
+    {
+      "source": "ui",
+      "seq": 16,
+      "timestamp": "2026-03-03T16:53:40.486Z",
+      "timestampMs": 1772556820486,
+      "event": "plugin.event.received",
+      "detail": {
+        "event": "runtime-log-entry",
+        "payload": {
+          "source": "plugin",
+          "seq": 5,
+          "timestamp": "2026-03-03T16:53:40.483Z",
+          "timestampMs": 1772556820483,
+          "event": "rpc.request.succeeded",
+          "detail": {
+            "requestId": "rpc_1772556820471_1",
+            "action": "save-settings",
+            "response": {
+              "success": true
+            }
+          }
+        }
+      },
+      "mergedIndex": 21
+    },
+    {
+      "source": "ui",
+      "seq": 17,
+      "timestamp": "2026-03-03T16:53:40.486Z",
+      "timestampMs": 1772556820486,
+      "event": "plugin.runtime-log.stream",
+      "detail": {
+        "pluginSeq": 5,
+        "pluginEvent": "rpc.request.succeeded"
+      },
+      "mergedIndex": 22
+    },
+    {
+      "source": "ui",
+      "seq": 18,
+      "timestamp": "2026-03-03T16:53:40.487Z",
+      "timestampMs": 1772556820487,
+      "event": "rpc.response.ok",
+      "detail": {
+        "requestId": "rpc_1772556820471_1",
+        "action": "save-settings",
+        "durationMs": 16,
+        "data": {
+          "success": true
+        }
+      },
+      "mergedIndex": 23
+    },
+    {
+      "source": "ui",
+      "seq": 19,
+      "timestamp": "2026-03-03T16:53:40.487Z",
+      "timestampMs": 1772556820487,
+      "event": "ui.notify",
+      "detail": {
+        "message": "Settings saved.",
+        "error": false
+      },
+      "mergedIndex": 24
+    },
+    {
+      "source": "ui",
+      "seq": 20,
+      "timestamp": "2026-03-03T16:53:40.487Z",
+      "timestampMs": 1772556820487,
+      "event": "rpc.request.sent",
+      "detail": {
+        "requestId": "rpc_1772556820487_2",
+        "action": "notify",
+        "payload": {
+          "message": "Settings saved."
+        }
+      },
+      "mergedIndex": 25
+    },
+    {
+      "source": "plugin",
+      "seq": 6,
+      "timestamp": "2026-03-03T16:53:40.489Z",
+      "timestampMs": 1772556820489,
+      "event": "rpc.request.received",
+      "detail": {
+        "requestId": "rpc_1772556820487_2",
+        "action": "notify",
+        "payload": {
+          "message": "Settings saved."
+        }
+      },
+      "mergedIndex": 26
+    },
+    {
+      "source": "plugin",
+      "seq": 7,
+      "timestamp": "2026-03-03T16:53:40.491Z",
+      "timestampMs": 1772556820491,
+      "event": "rpc.request.succeeded",
+      "detail": {
+        "requestId": "rpc_1772556820487_2",
+        "action": "notify",
+        "response": {
+          "success": true
+        }
+      },
+      "mergedIndex": 27
+    },
+    {
+      "source": "ui",
+      "seq": 21,
+      "timestamp": "2026-03-03T16:53:40.505Z",
+      "timestampMs": 1772556820505,
+      "event": "plugin.event.received",
+      "detail": {
+        "event": "runtime-log-entry",
+        "payload": {
+          "source": "plugin",
+          "seq": 6,
+          "timestamp": "2026-03-03T16:53:40.489Z",
+          "timestampMs": 1772556820489,
+          "event": "rpc.request.received",
+          "detail": {
+            "requestId": "rpc_1772556820487_2",
+            "action": "notify",
+            "payload": {
+              "message": "Settings saved."
+            }
+          }
+        }
+      },
+      "mergedIndex": 28
+    },
+    {
+      "source": "ui",
+      "seq": 22,
+      "timestamp": "2026-03-03T16:53:40.505Z",
+      "timestampMs": 1772556820505,
+      "event": "plugin.runtime-log.stream",
+      "detail": {
+        "pluginSeq": 6,
+        "pluginEvent": "rpc.request.received"
+      },
+      "mergedIndex": 29
+    },
+    {
+      "source": "ui",
+      "seq": 23,
+      "timestamp": "2026-03-03T16:53:40.507Z",
+      "timestampMs": 1772556820507,
+      "event": "plugin.event.received",
+      "detail": {
+        "event": "runtime-log-entry",
+        "payload": {
+          "source": "plugin",
+          "seq": 7,
+          "timestamp": "2026-03-03T16:53:40.491Z",
+          "timestampMs": 1772556820491,
+          "event": "rpc.request.succeeded",
+          "detail": {
+            "requestId": "rpc_1772556820487_2",
+            "action": "notify",
+            "response": {
+              "success": true
+            }
+          }
+        }
+      },
+      "mergedIndex": 30
+    },
+    {
+      "source": "ui",
+      "seq": 24,
+      "timestamp": "2026-03-03T16:53:40.507Z",
+      "timestampMs": 1772556820507,
+      "event": "plugin.runtime-log.stream",
+      "detail": {
+        "pluginSeq": 7,
+        "pluginEvent": "rpc.request.succeeded"
+      },
+      "mergedIndex": 31
+    },
+    {
+      "source": "ui",
+      "seq": 25,
+      "timestamp": "2026-03-03T16:53:40.508Z",
+      "timestampMs": 1772556820508,
+      "event": "rpc.response.ok",
+      "detail": {
+        "requestId": "rpc_1772556820487_2",
+        "action": "notify",
+        "durationMs": 21,
+        "data": {
+          "success": true
+        }
+      },
+      "mergedIndex": 32
+    },
+    {
+      "source": "plugin",
+      "seq": 8,
+      "timestamp": "2026-03-03T16:53:41.453Z",
+      "timestampMs": 1772556821453,
+      "event": "figma.selectionchange",
+      "detail": {
+        "pageId": "840:2",
+        "selectionCount": 0
+      },
+      "mergedIndex": 33
+    },
+    {
+      "source": "plugin",
+      "seq": 9,
+      "timestamp": "2026-03-03T16:53:41.453Z",
+      "timestampMs": 1772556821453,
+      "event": "selection.context.posted",
+      "detail": {
+        "pageId": "840:2",
+        "pageName": "Meta-Ultra & SWI & SWIM",
+        "selectionCount": 0,
+        "selectedNodeIds": []
+      },
+      "mergedIndex": 34
+    },
+    {
+      "source": "ui",
+      "seq": 26,
+      "timestamp": "2026-03-03T16:53:41.459Z",
+      "timestampMs": 1772556821459,
+      "event": "plugin.event.received",
+      "detail": {
+        "event": "runtime-log-entry",
+        "payload": {
+          "source": "plugin",
+          "seq": 8,
+          "timestamp": "2026-03-03T16:53:41.453Z",
+          "timestampMs": 1772556821453,
+          "event": "figma.selectionchange",
+          "detail": {
+            "pageId": "840:2",
+            "selectionCount": 0
+          }
+        }
+      },
+      "mergedIndex": 35
+    },
+    {
+      "source": "ui",
+      "seq": 27,
+      "timestamp": "2026-03-03T16:53:41.459Z",
+      "timestampMs": 1772556821459,
+      "event": "plugin.runtime-log.stream",
+      "detail": {
+        "pluginSeq": 8,
+        "pluginEvent": "figma.selectionchange"
+      },
+      "mergedIndex": 36
+    },
+    {
+      "source": "ui",
+      "seq": 28,
+      "timestamp": "2026-03-03T16:53:41.460Z",
+      "timestampMs": 1772556821460,
+      "event": "plugin.event.received",
+      "detail": {
+        "event": "runtime-log-entry",
+        "payload": {
+          "source": "plugin",
+          "seq": 9,
+          "timestamp": "2026-03-03T16:53:41.453Z",
+          "timestampMs": 1772556821453,
+          "event": "selection.context.posted",
+          "detail": {
+            "pageId": "840:2",
+            "pageName": "Meta-Ultra & SWI & SWIM",
+            "selectionCount": 0,
+            "selectedNodeIds": []
+          }
+        }
+      },
+      "mergedIndex": 37
+    },
+    {
+      "source": "ui",
+      "seq": 29,
+      "timestamp": "2026-03-03T16:53:41.460Z",
+      "timestampMs": 1772556821460,
+      "event": "plugin.runtime-log.stream",
+      "detail": {
+        "pluginSeq": 9,
+        "pluginEvent": "selection.context.posted"
+      },
+      "mergedIndex": 38
+    },
+    {
+      "source": "ui",
+      "seq": 30,
+      "timestamp": "2026-03-03T16:53:41.461Z",
+      "timestampMs": 1772556821461,
+      "event": "plugin.event.received",
+      "detail": {
+        "event": "selection-changed",
+        "payload": {
+          "pageId": "840:2",
+          "pageName": "Meta-Ultra & SWI & SWIM",
+          "selectionCount": 0,
+          "selectedNodeIds": [],
+          "selectedNodeSummaries": [],
+          "selectedNodesDsl": "",
+          "selectedBounds": []
+        }
+      },
+      "mergedIndex": 39
+    },
+    {
+      "source": "plugin",
+      "seq": 10,
+      "timestamp": "2026-03-03T16:53:42.891Z",
+      "timestampMs": 1772556822891,
+      "event": "figma.selectionchange",
+      "detail": {
+        "pageId": "840:2",
+        "selectionCount": 1
+      },
+      "mergedIndex": 40
+    },
+    {
+      "source": "plugin",
+      "seq": 11,
+      "timestamp": "2026-03-03T16:53:42.893Z",
+      "timestampMs": 1772556822893,
+      "event": "selection.context.posted",
+      "detail": {
+        "pageId": "840:2",
+        "pageName": "Meta-Ultra & SWI & SWIM",
+        "selectionCount": 1,
+        "selectedNodeIds": [
+          "1261:208"
+        ]
+      },
+      "mergedIndex": 41
+    },
+    {
+      "source": "ui",
+      "seq": 31,
+      "timestamp": "2026-03-03T16:53:42.905Z",
+      "timestampMs": 1772556822905,
+      "event": "plugin.event.received",
+      "detail": {
+        "event": "runtime-log-entry",
+        "payload": {
+          "source": "plugin",
+          "seq": 10,
+          "timestamp": "2026-03-03T16:53:42.891Z",
+          "timestampMs": 1772556822891,
+          "event": "figma.selectionchange",
+          "detail": {
+            "pageId": "840:2",
+            "selectionCount": 1
+          }
+        }
+      },
+      "mergedIndex": 42
+    },
+    {
+      "source": "ui",
+      "seq": 32,
+      "timestamp": "2026-03-03T16:53:42.905Z",
+      "timestampMs": 1772556822905,
+      "event": "plugin.runtime-log.stream",
+      "detail": {
+        "pluginSeq": 10,
+        "pluginEvent": "figma.selectionchange"
+      },
+      "mergedIndex": 43
+    },
+    {
+      "source": "ui",
+      "seq": 33,
+      "timestamp": "2026-03-03T16:53:42.906Z",
+      "timestampMs": 1772556822906,
+      "event": "plugin.event.received",
+      "detail": {
+        "event": "runtime-log-entry",
+        "payload": {
+          "source": "plugin",
+          "seq": 11,
+          "timestamp": "2026-03-03T16:53:42.893Z",
+          "timestampMs": 1772556822893,
+          "event": "selection.context.posted",
+          "detail": {
+            "pageId": "840:2",
+            "pageName": "Meta-Ultra & SWI & SWIM",
+            "selectionCount": 1,
+            "selectedNodeIds": [
+              "1261:208"
+            ]
+          }
+        }
+      },
+      "mergedIndex": 44
+    },
+    {
+      "source": "ui",
+      "seq": 34,
+      "timestamp": "2026-03-03T16:53:42.906Z",
+      "timestampMs": 1772556822906,
+      "event": "plugin.runtime-log.stream",
+      "detail": {
+        "pluginSeq": 11,
+        "pluginEvent": "selection.context.posted"
+      },
+      "mergedIndex": 45
+    },
+    {
+      "source": "ui",
+      "seq": 35,
+      "timestamp": "2026-03-03T16:53:42.907Z",
+      "timestampMs": 1772556822907,
+      "event": "plugin.event.received",
+      "detail": {
+        "event": "selection-changed",
+        "payload": {
+          "pageId": "840:2",
+          "pageName": "Meta-Ultra & SWI & SWIM",
+          "selectionCount": 1,
+          "selectedNodeIds": [
+            "1261:208"
+          ],
+          "selectedNodeSummaries": [
+            {
+              "nodeId": "1261:208",
+              "nodeType": "FRAME",
+              "name": "Frame 11",
+              "bounds": {
+                "x": -1260,
+                "y": 638,
+                "width": 419,
+                "height": 77
+              }
+            }
+          ],
+          "selectedNodesDsl": "<Frame id=\"1261:208\" name=\"Frame 11\" x=\"-1260\" y=\"638\" pos=\"-1260,638\" width=\"419\" height=\"77\" size=\"419x77\" opacity=\"1\" radius=\"0\" fill=\"#ffffff\" strokeWidth=\"1\" />",
+          "selectedBounds": [
+            {
+              "x": -1260,
+              "y": 638,
+              "width": 419,
+              "height": 77
+            }
+          ]
+        }
+      },
+      "mergedIndex": 46
+    },
+    {
+      "source": "ui",
+      "seq": 36,
+      "timestamp": "2026-03-03T16:53:53.500Z",
+      "timestampMs": 1772556833500,
+      "event": "ui.image.read.start",
+      "detail": {
+        "name": "Introduction@2x.png",
+        "size": 903512,
+        "type": "image/png"
+      },
+      "mergedIndex": 47
+    },
+    {
+      "source": "ui",
+      "seq": 37,
+      "timestamp": "2026-03-03T16:53:53.506Z",
+      "timestampMs": 1772556833506,
+      "event": "ui.image.read.done",
+      "detail": {
+        "name": "Introduction@2x.png",
+        "size": 903512,
+        "dataUrlLength": 1204706
+      },
+      "mergedIndex": 48
+    },
+    {
+      "source": "ui",
+      "seq": 38,
+      "timestamp": "2026-03-03T16:54:24.934Z",
+      "timestampMs": 1772556864934,
+      "event": "prompt.send.requested",
+      "detail": {
+        "running": false,
+        "textLength": 36,
+        "imageCount": 1
+      },
+      "mergedIndex": 49
+    },
+    {
+      "source": "ui",
+      "seq": 39,
+      "timestamp": "2026-03-03T16:54:24.935Z",
+      "timestampMs": 1772556864935,
+      "event": "ui.chat.message",
+      "detail": {
+        "role": "user",
+        "textLength": 36,
+        "hasThinking": false
+      },
+      "mergedIndex": 50
+    },
+    {
+      "source": "ui",
+      "seq": 40,
+      "timestamp": "2026-03-03T16:54:24.940Z",
+      "timestampMs": 1772556864940,
+      "event": "ui.tool-panel.open",
+      "detail": {},
+      "mergedIndex": 51
+    },
+    {
+      "source": "ui",
+      "seq": 41,
+      "timestamp": "2026-03-03T16:54:24.942Z",
+      "timestampMs": 1772556864942,
+      "event": "prompt.send.accepted",
+      "detail": {
+        "textLength": 36,
+        "imageCount": 0,
+        "messageCount": 1
+      },
+      "mergedIndex": 52
+    },
+    {
+      "source": "ui",
+      "seq": 42,
+      "timestamp": "2026-03-03T16:54:24.943Z",
+      "timestampMs": 1772556864943,
+      "event": "agent.loop.start",
+      "detail": {
+        "maxTurns": 10,
+        "messageCount": 1
+      },
+      "mergedIndex": 53
+    },
+    {
+      "source": "ui",
+      "seq": 43,
+      "timestamp": "2026-03-03T16:54:24.943Z",
+      "timestampMs": 1772556864943,
+      "event": "agent.turn.start",
+      "detail": {
+        "turn": 1,
+        "contextMessages": 1
+      },
+      "mergedIndex": 54
+    },
+    {
+      "source": "ui",
+      "seq": 44,
+      "timestamp": "2026-03-03T16:54:24.946Z",
+      "timestampMs": 1772556864946,
+      "event": "llm.request.prepare",
+      "detail": {
+        "endpoint": "https://zenmux.ai/api/v1/chat/completions",
+        "model": "google/gemini-3.1-pro-preview",
+        "temperature": 0.8,
+        "messageCount": 2,
+        "toolsCount": 9,
+        "streaming": true
+      },
+      "mergedIndex": 55
+    },
+    {
+      "source": "ui",
+      "seq": 45,
+      "timestamp": "2026-03-03T16:54:41.075Z",
+      "timestampMs": 1772556881075,
+      "event": "llm.request.response",
+      "detail": {
+        "status": 200,
+        "ok": true,
+        "durationMs": 16129
+      },
+      "mergedIndex": 56
+    },
+    {
+      "source": "ui",
+      "seq": 46,
+      "timestamp": "2026-03-03T16:54:41.078Z",
+      "timestampMs": 1772556881078,
+      "event": "llm.stream.delta.reasoning",
+      "detail": {
+        "deltaLength": 350,
+        "totalLength": 350,
+        "preview": "**Defining the Canvas**\n\nI'm focusing on recreating the image within the specified frame, which is quite small compared to the original aspect ratio. I'm consid\n...[truncated 190 chars]"
+      },
+      "mergedIndex": 57
+    },
+    {
+      "source": "ui",
+      "seq": 47,
+      "timestamp": "2026-03-03T16:54:45.185Z",
+      "timestampMs": 1772556885185,
+      "event": "llm.stream.delta.reasoning",
+      "detail": {
+        "deltaLength": 386,
+        "totalLength": 736,
+        "preview": "**Scaling the Approach**\n\nI've shifted focus to the frame's dimensions, aiming to mirror the original image's aspect ratio. I've decided to set the frame to 300\n...[truncated 226 chars]"
+      },
+      "mergedIndex": 58
+    },
+    {
+      "source": "ui",
+      "seq": 48,
+      "timestamp": "2026-03-03T16:54:50.919Z",
+      "timestampMs": 1772556890919,
+      "event": "llm.stream.delta.reasoning",
+      "detail": {
+        "deltaLength": 381,
+        "totalLength": 1117,
+        "preview": "**Structuring the Components**\n\nI've now broken down the image into its core elements. On the left side, I see a bold orange title and a detailed monitor graphi\n...[truncated 221 chars]"
+      },
+      "mergedIndex": 59
+    },
+    {
+      "source": "ui",
+      "seq": 49,
+      "timestamp": "2026-03-03T16:54:56.529Z",
+      "timestampMs": 1772556896529,
+      "event": "llm.stream.delta.reasoning",
+      "detail": {
+        "deltaLength": 388,
+        "totalLength": 1505,
+        "preview": "**Planning the Blueprint**\n\nI've now considered the full image, and I'm ready to design the complete DSL. Frame adjustments are complete, now at 2800x950, and I\n...[truncated 228 chars]"
+      },
+      "mergedIndex": 60
+    },
+    {
+      "source": "ui",
+      "seq": 50,
+      "timestamp": "2026-03-03T16:55:02.240Z",
+      "timestampMs": 1772556902240,
+      "event": "llm.stream.delta.reasoning",
+      "detail": {
+        "deltaLength": 353,
+        "totalLength": 1858,
+        "preview": "**Mapping the Layout**\n\nI'm now generating the complete vector design. The frame is now set at 2800x950. I've begun constructing the central dashed line, ensuri\n...[truncated 193 chars]"
+      },
+      "mergedIndex": 61
+    },
+    {
+      "source": "ui",
+      "seq": 51,
+      "timestamp": "2026-03-03T16:55:07.975Z",
+      "timestampMs": 1772556907975,
+      "event": "llm.stream.delta.reasoning",
+      "detail": {
+        "deltaLength": 374,
+        "totalLength": 2232,
+        "preview": "**Delving into the Design**\n\nI'm now deep in the details, crafting the DSL for the full graphic. I've pinpointed the exact frame size and decided on colors. My \n...[truncated 214 chars]"
+      },
+      "mergedIndex": 62
+    },
+    {
+      "source": "ui",
+      "seq": 52,
+      "timestamp": "2026-03-03T16:55:13.253Z",
+      "timestampMs": 1772556913253,
+      "event": "llm.stream.delta.reasoning",
+      "detail": {
+        "deltaLength": 344,
+        "totalLength": 2576,
+        "preview": "**Refining the Vectors**\n\nI'm now fully immersed in the design, with the frame set at 2800x950. After establishing the primary structure, I've defined vector sh\n...[truncated 184 chars]"
+      },
+      "mergedIndex": 63
+    },
+    {
+      "source": "ui",
+      "seq": 53,
+      "timestamp": "2026-03-03T16:55:19.764Z",
+      "timestampMs": 1772556919764,
+      "event": "llm.stream.delta.reasoning",
+      "detail": {
+        "deltaLength": 337,
+        "totalLength": 2913,
+        "preview": "**Composing the DSL**\n\nI'm now fully committed to building the DSL, setting the frame size at 2800x950. After defining crucial colors, I'm constructing each ele\n...[truncated 177 chars]"
+      },
+      "mergedIndex": 64
+    },
+    {
+      "source": "ui",
+      "seq": 54,
+      "timestamp": "2026-03-03T16:55:25.868Z",
+      "timestampMs": 1772556925868,
+      "event": "llm.stream.delta.reasoning",
+      "detail": {
+        "deltaLength": 347,
+        "totalLength": 3260,
+        "preview": "**Crafting the Vector Design**\n\nI'm now fully immersed in the vector creation, and have defined the initial frame at 2800x950, and colors. I've broken down the \n...[truncated 187 chars]"
+      },
+      "mergedIndex": 65
+    },
+    {
+      "source": "ui",
+      "seq": 55,
+      "timestamp": "2026-03-03T16:55:31.938Z",
+      "timestampMs": 1772556931938,
+      "event": "llm.stream.delta.reasoning",
+      "detail": {
+        "deltaLength": 298,
+        "totalLength": 3558,
+        "preview": "**Structuring the Design**\n\nI'm now generating the complete vector design, and have fully dissected the elements of the left monitor. I'm focusing on crafting t\n...[truncated 138 chars]"
+      },
+      "mergedIndex": 66
+    },
+    {
+      "source": "ui",
+      "seq": 56,
+      "timestamp": "2026-03-03T16:55:33.394Z",
+      "timestampMs": 1772556933394,
+      "event": "llm.stream.completed",
+      "detail": {
+        "contentLength": 0,
+        "reasoningLength": 3558,
+        "toolCallCount": 0,
+        "usage": null
+      },
+      "mergedIndex": 67
+    },
+    {
+      "source": "ui",
+      "seq": 57,
+      "timestamp": "2026-03-03T16:55:33.395Z",
+      "timestampMs": 1772556933395,
+      "event": "agent.turn.assistant-message",
+      "detail": {
+        "turn": 1,
+        "contentLength": 0,
+        "toolCallCount": 0
+      },
+      "mergedIndex": 68
+    },
+    {
+      "source": "ui",
+      "seq": 58,
+      "timestamp": "2026-03-03T16:55:33.395Z",
+      "timestampMs": 1772556933395,
+      "event": "agent.turn.completed",
+      "detail": {
+        "turn": 1,
+        "reason": "no-tool-calls"
+      },
+      "mergedIndex": 69
+    },
+    {
+      "source": "ui",
+      "seq": 59,
+      "timestamp": "2026-03-03T16:55:33.395Z",
+      "timestampMs": 1772556933395,
+      "event": "prompt.send.finished",
+      "detail": {
+        "totalMessages": 2
+      },
+      "mergedIndex": 70
+    },
+    {
+      "source": "ui",
+      "seq": 60,
+      "timestamp": "2026-03-03T16:57:12.689Z",
+      "timestampMs": 1772557032689,
+      "event": "ui.log-export.requested",
+      "detail": {
+        "uiLogEntries": 59,
+        "messageCount": 2
+      },
+      "mergedIndex": 71
+    },
+    {
+      "source": "ui",
+      "seq": 61,
+      "timestamp": "2026-03-03T16:57:12.689Z",
+      "timestampMs": 1772557032689,
+      "event": "rpc.request.sent",
+      "detail": {
+        "requestId": "rpc_1772557032689_3",
+        "action": "get-runtime-log",
+        "payload": {}
+      },
+      "mergedIndex": 72
+    },
+    {
+      "source": "plugin",
+      "seq": 12,
+      "timestamp": "2026-03-03T16:57:12.699Z",
+      "timestampMs": 1772557032699,
+      "event": "rpc.request.received",
+      "detail": {
+        "requestId": "rpc_1772557032689_3",
+        "action": "get-runtime-log",
+        "payload": {}
+      },
+      "mergedIndex": 73
+    },
+    {
+      "source": "plugin",
+      "seq": 13,
+      "timestamp": "2026-03-03T16:57:12.701Z",
+      "timestampMs": 1772557032701,
+      "event": "rpc.request.succeeded",
+      "detail": {
+        "requestId": "rpc_1772557032689_3",
+        "action": "get-runtime-log",
+        "response": {
+          "source": "plugin",
+          "exportedAt": "2026-03-03T16:57:12.700Z",
+          "entries": [
+            {
+              "source": "plugin",
+              "seq": 1,
+              "timestamp": "2026-03-03T16:53:35.190Z",
+              "timestampMs": 1772556815190,
+              "event": "plugin.ui.shown",
+              "detail": {
+                "width": 440,
+                "height": 720,
+                "themeColors": true
+              }
+            },
+            {
+              "source": "plugin",
+              "seq": 2,
+              "timestamp": "2026-03-03T16:53:35.233Z",
+              "timestampMs": 1772556815233,
+              "event": "rpc.request.received",
+              "detail": {
+                "requestId": "rpc_1772556815223_0",
+                "action": "bootstrap",
+                "payload": {}
+              }
+            },
+            {
+              "source": "plugin",
+              "seq": 3,
+              "timestamp": "2026-03-03T16:53:35.254Z",
+              "timestampMs": 1772556815254,
+              "event": "rpc.request.succeeded",
+              "detail": {
+                "requestId": "rpc_1772556815223_0",
+                "action": "bootstrap",
+                "response": {
+                  "settings": {
+                    "baseUrl": "[depth-truncated]",
+                    "apiKey": "[REDACTED]",
+                    "model": "[depth-truncated]",
+                    "systemPrompt": "[depth-truncated]",
+                    "temperature": "[depth-truncated]",
+                    "provider": "[depth-truncated]"
+                  },
+                  "selection": {
+                    "pageId": "[depth-truncated]",
+                    "pageName": "[depth-truncated]",
+                    "selectionCount": "[depth-truncated]",
+                    "selectedNodeIds": "[depth-truncated]",
+                    "selectedNodeSummaries": "[depth-truncated]",
+                    "selectedNodesDsl": "[depth-truncated]",
+                    "selectedBounds": "[depth-truncated]"
+                  }
+                }
+              }
+            },
+            {
+              "source": "plugin",
+              "seq": 4,
+              "timestamp": "2026-03-03T16:53:40.477Z",
+              "timestampMs": 1772556820477,
+              "event": "rpc.request.received",
+              "detail": {
+                "requestId": "rpc_1772556820471_1",
+                "action": "save-settings",
+                "payload": {
+                  "provider": "openai",
+                  "baseUrl": "https://zenmux.ai/api/v1",
+                  "apiKey": "[REDACTED]",
+                  "model": "google/gemini-3.1-pro-preview",
+                  "temperature": 0.8,
+                  "systemPrompt": "You are Viga, an expert Figma design agent. Prefer using provided tools to inspect and edit the document safely."
+                }
+              }
+            },
+            {
+              "source": "plugin",
+              "seq": 5,
+              "timestamp": "2026-03-03T16:53:40.483Z",
+              "timestampMs": 1772556820483,
+              "event": "rpc.request.succeeded",
+              "detail": {
+                "requestId": "rpc_1772556820471_1",
+                "action": "save-settings",
+                "response": {
+                  "success": true
+                }
+              }
+            },
+            {
+              "source": "plugin",
+              "seq": 6,
+              "timestamp": "2026-03-03T16:53:40.489Z",
+              "timestampMs": 1772556820489,
+              "event": "rpc.request.received",
+              "detail": {
+                "requestId": "rpc_1772556820487_2",
+                "action": "notify",
+                "payload": {
+                  "message": "Settings saved."
+                }
+              }
+            },
+            {
+              "source": "plugin",
+              "seq": 7,
+              "timestamp": "2026-03-03T16:53:40.491Z",
+              "timestampMs": 1772556820491,
+              "event": "rpc.request.succeeded",
+              "detail": {
+                "requestId": "rpc_1772556820487_2",
+                "action": "notify",
+                "response": {
+                  "success": true
+                }
+              }
+            },
+            {
+              "source": "plugin",
+              "seq": 8,
+              "timestamp": "2026-03-03T16:53:41.453Z",
+              "timestampMs": 1772556821453,
+              "event": "figma.selectionchange",
+              "detail": {
+                "pageId": "840:2",
+                "selectionCount": 0
+              }
+            },
+            {
+              "source": "plugin",
+              "seq": 9,
+              "timestamp": "2026-03-03T16:53:41.453Z",
+              "timestampMs": 1772556821453,
+              "event": "selection.context.posted",
+              "detail": {
+                "pageId": "840:2",
+                "pageName": "Meta-Ultra & SWI & SWIM",
+                "selectionCount": 0,
+                "selectedNodeIds": []
+              }
+            },
+            {
+              "source": "plugin",
+              "seq": 10,
+              "timestamp": "2026-03-03T16:53:42.891Z",
+              "timestampMs": 1772556822891,
+              "event": "figma.selectionchange",
+              "detail": {
+                "pageId": "840:2",
+                "selectionCount": 1
+              }
+            },
+            {
+              "source": "plugin",
+              "seq": 11,
+              "timestamp": "2026-03-03T16:53:42.893Z",
+              "timestampMs": 1772556822893,
+              "event": "selection.context.posted",
+              "detail": {
+                "pageId": "840:2",
+                "pageName": "Meta-Ultra & SWI & SWIM",
+                "selectionCount": 1,
+                "selectedNodeIds": [
+                  "1261:208"
+                ]
+              }
+            },
+            {
+              "source": "plugin",
+              "seq": 12,
+              "timestamp": "2026-03-03T16:57:12.699Z",
+              "timestampMs": 1772557032699,
+              "event": "rpc.request.received",
+              "detail": {
+                "requestId": "rpc_1772557032689_3",
+                "action": "get-runtime-log",
+                "payload": {}
+              }
+            }
+          ]
+        }
+      },
+      "mergedIndex": 74
+    },
+    {
+      "source": "ui",
+      "seq": 62,
+      "timestamp": "2026-03-03T16:57:12.706Z",
+      "timestampMs": 1772557032706,
+      "event": "plugin.event.received",
+      "detail": {
+        "event": "runtime-log-entry",
+        "payload": {
+          "source": "plugin",
+          "seq": 12,
+          "timestamp": "2026-03-03T16:57:12.699Z",
+          "timestampMs": 1772557032699,
+          "event": "rpc.request.received",
+          "detail": {
+            "requestId": "rpc_1772557032689_3",
+            "action": "get-runtime-log",
+            "payload": {}
+          }
+        }
+      },
+      "mergedIndex": 75
+    },
+    {
+      "source": "ui",
+      "seq": 63,
+      "timestamp": "2026-03-03T16:57:12.706Z",
+      "timestampMs": 1772557032706,
+      "event": "plugin.runtime-log.stream",
+      "detail": {
+        "pluginSeq": 12,
+        "pluginEvent": "rpc.request.received"
+      },
+      "mergedIndex": 76
+    },
+    {
+      "source": "ui",
+      "seq": 64,
+      "timestamp": "2026-03-03T16:57:12.707Z",
+      "timestampMs": 1772557032707,
+      "event": "plugin.event.received",
+      "detail": {
+        "event": "runtime-log-entry",
+        "payload": {
+          "source": "plugin",
+          "seq": 13,
+          "timestamp": "2026-03-03T16:57:12.701Z",
+          "timestampMs": 1772557032701,
+          "event": "rpc.request.succeeded",
+          "detail": {
+            "requestId": "rpc_1772557032689_3",
+            "action": "get-runtime-log",
+            "response": {
+              "source": "plugin",
+              "exportedAt": "2026-03-03T16:57:12.700Z",
+              "entries": [
+                {
+                  "source": "plugin",
+                  "seq": 1,
+                  "timestamp": "2026-03-03T16:53:35.190Z",
+                  "timestampMs": 1772556815190,
+                  "event": "plugin.ui.shown",
+                  "detail": {
+                    "width": "[depth-truncated]",
+                    "height": "[depth-truncated]",
+                    "themeColors": "[depth-truncated]"
+                  }
+                },
+                {
+                  "source": "plugin",
+                  "seq": 2,
+                  "timestamp": "2026-03-03T16:53:35.233Z",
+                  "timestampMs": 1772556815233,
+                  "event": "rpc.request.received",
+                  "detail": {
+                    "requestId": "[depth-truncated]",
+                    "action": "[depth-truncated]",
+                    "payload": "[depth-truncated]"
+                  }
+                },
+                {
+                  "source": "plugin",
+                  "seq": 3,
+                  "timestamp": "2026-03-03T16:53:35.254Z",
+                  "timestampMs": 1772556815254,
+                  "event": "rpc.request.succeeded",
+                  "detail": {
+                    "requestId": "[depth-truncated]",
+                    "action": "[depth-truncated]",
+                    "response": "[depth-truncated]"
+                  }
+                },
+                {
+                  "source": "plugin",
+                  "seq": 4,
+                  "timestamp": "2026-03-03T16:53:40.477Z",
+                  "timestampMs": 1772556820477,
+                  "event": "rpc.request.received",
+                  "detail": {
+                    "requestId": "[depth-truncated]",
+                    "action": "[depth-truncated]",
+                    "payload": "[depth-truncated]"
+                  }
+                },
+                {
+                  "source": "plugin",
+                  "seq": 5,
+                  "timestamp": "2026-03-03T16:53:40.483Z",
+                  "timestampMs": 1772556820483,
+                  "event": "rpc.request.succeeded",
+                  "detail": {
+                    "requestId": "[depth-truncated]",
+                    "action": "[depth-truncated]",
+                    "response": "[depth-truncated]"
+                  }
+                },
+                {
+                  "source": "plugin",
+                  "seq": 6,
+                  "timestamp": "2026-03-03T16:53:40.489Z",
+                  "timestampMs": 1772556820489,
+                  "event": "rpc.request.received",
+                  "detail": {
+                    "requestId": "[depth-truncated]",
+                    "action": "[depth-truncated]",
+                    "payload": "[depth-truncated]"
+                  }
+                },
+                {
+                  "source": "plugin",
+                  "seq": 7,
+                  "timestamp": "2026-03-03T16:53:40.491Z",
+                  "timestampMs": 1772556820491,
+                  "event": "rpc.request.succeeded",
+                  "detail": {
+                    "requestId": "[depth-truncated]",
+                    "action": "[depth-truncated]",
+                    "response": "[depth-truncated]"
+                  }
+                },
+                {
+                  "source": "plugin",
+                  "seq": 8,
+                  "timestamp": "2026-03-03T16:53:41.453Z",
+                  "timestampMs": 1772556821453,
+                  "event": "figma.selectionchange",
+                  "detail": {
+                    "pageId": "[depth-truncated]",
+                    "selectionCount": "[depth-truncated]"
+                  }
+                },
+                {
+                  "source": "plugin",
+                  "seq": 9,
+                  "timestamp": "2026-03-03T16:53:41.453Z",
+                  "timestampMs": 1772556821453,
+                  "event": "selection.context.posted",
+                  "detail": {
+                    "pageId": "[depth-truncated]",
+                    "pageName": "[depth-truncated]",
+                    "selectionCount": "[depth-truncated]",
+                    "selectedNodeIds": "[depth-truncated]"
+                  }
+                },
+                {
+                  "source": "plugin",
+                  "seq": 10,
+                  "timestamp": "2026-03-03T16:53:42.891Z",
+                  "timestampMs": 1772556822891,
+                  "event": "figma.selectionchange",
+                  "detail": {
+                    "pageId": "[depth-truncated]",
+                    "selectionCount": "[depth-truncated]"
+                  }
+                },
+                {
+                  "source": "plugin",
+                  "seq": 11,
+                  "timestamp": "2026-03-03T16:53:42.893Z",
+                  "timestampMs": 1772556822893,
+                  "event": "selection.context.posted",
+                  "detail": {
+                    "pageId": "[depth-truncated]",
+                    "pageName": "[depth-truncated]",
+                    "selectionCount": "[depth-truncated]",
+                    "selectedNodeIds": "[depth-truncated]"
+                  }
+                },
+                {
+                  "source": "plugin",
+                  "seq": 12,
+                  "timestamp": "2026-03-03T16:57:12.699Z",
+                  "timestampMs": 1772557032699,
+                  "event": "rpc.request.received",
+                  "detail": {
+                    "requestId": "[depth-truncated]",
+                    "action": "[depth-truncated]",
+                    "payload": "[depth-truncated]"
+                  }
+                }
+              ]
+            }
+          }
+        }
+      },
+      "mergedIndex": 77
+    },
+    {
+      "source": "ui",
+      "seq": 65,
+      "timestamp": "2026-03-03T16:57:12.707Z",
+      "timestampMs": 1772557032707,
+      "event": "plugin.runtime-log.stream",
+      "detail": {
+        "pluginSeq": 13,
+        "pluginEvent": "rpc.request.succeeded"
+      },
+      "mergedIndex": 78
+    },
+    {
+      "source": "ui",
+      "seq": 66,
+      "timestamp": "2026-03-03T16:57:12.709Z",
+      "timestampMs": 1772557032709,
+      "event": "rpc.response.ok",
+      "detail": {
+        "requestId": "rpc_1772557032689_3",
+        "action": "get-runtime-log",
+        "durationMs": 20,
+        "data": {
+          "source": "plugin",
+          "exportedAt": "2026-03-03T16:57:12.700Z",
+          "entries": [
+            {
+              "source": "plugin",
+              "seq": 1,
+              "timestamp": "2026-03-03T16:53:35.190Z",
+              "timestampMs": 1772556815190,
+              "event": "plugin.ui.shown",
+              "detail": {
+                "width": 440,
+                "height": 720,
+                "themeColors": true
+              }
+            },
+            {
+              "source": "plugin",
+              "seq": 2,
+              "timestamp": "2026-03-03T16:53:35.233Z",
+              "timestampMs": 1772556815233,
+              "event": "rpc.request.received",
+              "detail": {
+                "requestId": "rpc_1772556815223_0",
+                "action": "bootstrap",
+                "payload": {}
+              }
+            },
+            {
+              "source": "plugin",
+              "seq": 3,
+              "timestamp": "2026-03-03T16:53:35.254Z",
+              "timestampMs": 1772556815254,
+              "event": "rpc.request.succeeded",
+              "detail": {
+                "requestId": "rpc_1772556815223_0",
+                "action": "bootstrap",
+                "response": {
+                  "settings": {
+                    "baseUrl": "[depth-truncated]",
+                    "apiKey": "[REDACTED]",
+                    "model": "[depth-truncated]",
+                    "systemPrompt": "[depth-truncated]",
+                    "temperature": "[depth-truncated]",
+                    "provider": "[depth-truncated]"
+                  },
+                  "selection": {
+                    "pageId": "[depth-truncated]",
+                    "pageName": "[depth-truncated]",
+                    "selectionCount": "[depth-truncated]",
+                    "selectedNodeIds": "[depth-truncated]",
+                    "selectedNodeSummaries": "[depth-truncated]",
+                    "selectedNodesDsl": "[depth-truncated]",
+                    "selectedBounds": "[depth-truncated]"
+                  }
+                }
+              }
+            },
+            {
+              "source": "plugin",
+              "seq": 4,
+              "timestamp": "2026-03-03T16:53:40.477Z",
+              "timestampMs": 1772556820477,
+              "event": "rpc.request.received",
+              "detail": {
+                "requestId": "rpc_1772556820471_1",
+                "action": "save-settings",
+                "payload": {
+                  "provider": "openai",
+                  "baseUrl": "https://zenmux.ai/api/v1",
+                  "apiKey": "[REDACTED]",
+                  "model": "google/gemini-3.1-pro-preview",
+                  "temperature": 0.8,
+                  "systemPrompt": "You are Viga, an expert Figma design agent. Prefer using provided tools to inspect and edit the document safely."
+                }
+              }
+            },
+            {
+              "source": "plugin",
+              "seq": 5,
+              "timestamp": "2026-03-03T16:53:40.483Z",
+              "timestampMs": 1772556820483,
+              "event": "rpc.request.succeeded",
+              "detail": {
+                "requestId": "rpc_1772556820471_1",
+                "action": "save-settings",
+                "response": {
+                  "success": true
+                }
+              }
+            },
+            {
+              "source": "plugin",
+              "seq": 6,
+              "timestamp": "2026-03-03T16:53:40.489Z",
+              "timestampMs": 1772556820489,
+              "event": "rpc.request.received",
+              "detail": {
+                "requestId": "rpc_1772556820487_2",
+                "action": "notify",
+                "payload": {
+                  "message": "Settings saved."
+                }
+              }
+            },
+            {
+              "source": "plugin",
+              "seq": 7,
+              "timestamp": "2026-03-03T16:53:40.491Z",
+              "timestampMs": 1772556820491,
+              "event": "rpc.request.succeeded",
+              "detail": {
+                "requestId": "rpc_1772556820487_2",
+                "action": "notify",
+                "response": {
+                  "success": true
+                }
+              }
+            },
+            {
+              "source": "plugin",
+              "seq": 8,
+              "timestamp": "2026-03-03T16:53:41.453Z",
+              "timestampMs": 1772556821453,
+              "event": "figma.selectionchange",
+              "detail": {
+                "pageId": "840:2",
+                "selectionCount": 0
+              }
+            },
+            {
+              "source": "plugin",
+              "seq": 9,
+              "timestamp": "2026-03-03T16:53:41.453Z",
+              "timestampMs": 1772556821453,
+              "event": "selection.context.posted",
+              "detail": {
+                "pageId": "840:2",
+                "pageName": "Meta-Ultra & SWI & SWIM",
+                "selectionCount": 0,
+                "selectedNodeIds": []
+              }
+            },
+            {
+              "source": "plugin",
+              "seq": 10,
+              "timestamp": "2026-03-03T16:53:42.891Z",
+              "timestampMs": 1772556822891,
+              "event": "figma.selectionchange",
+              "detail": {
+                "pageId": "840:2",
+                "selectionCount": 1
+              }
+            },
+            {
+              "source": "plugin",
+              "seq": 11,
+              "timestamp": "2026-03-03T16:53:42.893Z",
+              "timestampMs": 1772556822893,
+              "event": "selection.context.posted",
+              "detail": {
+                "pageId": "840:2",
+                "pageName": "Meta-Ultra & SWI & SWIM",
+                "selectionCount": 1,
+                "selectedNodeIds": [
+                  "1261:208"
+                ]
+              }
+            },
+            {
+              "source": "plugin",
+              "seq": 12,
+              "timestamp": "2026-03-03T16:57:12.699Z",
+              "timestampMs": 1772557032699,
+              "event": "rpc.request.received",
+              "detail": {
+                "requestId": "rpc_1772557032689_3",
+                "action": "get-runtime-log",
+                "payload": {}
+              }
+            },
+            {
+              "source": "plugin",
+              "seq": 13,
+              "timestamp": "2026-03-03T16:57:12.701Z",
+              "timestampMs": 1772557032701,
+              "event": "rpc.request.succeeded",
+              "detail": {
+                "requestId": "rpc_1772557032689_3",
+                "action": "get-runtime-log",
+                "response": {
+                  "source": "plugin",
+                  "exportedAt": "2026-03-03T16:57:12.700Z",
+                  "entries": [
+                    "[depth-truncated]",
+                    "[depth-truncated]",
+                    "[depth-truncated]",
+                    "[depth-truncated]",
+                    "[depth-truncated]",
+                    "[depth-truncated]",
+                    "[depth-truncated]",
+                    "[depth-truncated]",
+                    "[depth-truncated]",
+                    "[depth-truncated]",
+                    "[depth-truncated]",
+                    "[depth-truncated]"
+                  ]
+                }
+              }
+            }
+          ]
+        }
+      },
+      "mergedIndex": 79
+    }
+  ]
+}

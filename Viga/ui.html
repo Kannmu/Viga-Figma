@@ -1,17 +1,2230 @@
-<h2>Rectangle Creator</h2>
-<p>Count: <input id="count" type="number" value="5"></p>
-<button id="create">Create</button>
-<button id="cancel">Cancel</button>
-<script>
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Viga</title>
+    <style>
+      :root {
+        color-scheme: light dark;
+        --bg: #0d1117;
+        --bg-soft: #151b23;
+        --bg-elev: #1b2430;
+        --text: #e6edf3;
+        --text-muted: #9fb0c3;
+        --line: #273448;
+        --accent: #3ab7a6;
+        --accent-2: #f3b35b;
+        --danger: #ea5a74;
+        --success: #4eb980;
+        --radius: 12px;
+        --shadow: 0 16px 34px rgba(0, 0, 0, 0.28);
+      }
 
-document.getElementById('create').onclick = () => {
-  const textbox = document.getElementById('count');
-  const count = parseInt(textbox.value, 10);
-  parent.postMessage({ pluginMessage: { type: 'create-shapes', count } }, '*')
-}
+      * {
+        box-sizing: border-box;
+      }
 
-document.getElementById('cancel').onclick = () => {
-  parent.postMessage({ pluginMessage: { type: 'cancel' } }, '*')
-}
+      body {
+        margin: 0;
+        font-family: "IBM Plex Sans", "Segoe UI", sans-serif;
+        color: var(--text);
+        background:
+          radial-gradient(circle at 12% 8%, rgba(58, 183, 166, 0.16) 0%, transparent 42%),
+          radial-gradient(circle at 92% 2%, rgba(243, 179, 91, 0.15) 0%, transparent 46%),
+          var(--bg);
+        height: 100vh;
+        overflow: hidden;
+      }
 
-</script>
+      .app {
+        display: grid;
+        grid-template-rows: auto 1fr auto;
+        height: 100vh;
+        min-height: 0;
+      }
+
+      .topbar {
+        border-bottom: 1px solid var(--line);
+        background: rgba(13, 17, 23, 0.9);
+        backdrop-filter: blur(12px);
+        padding: 12px 14px;
+        display: flex;
+        align-items: center;
+        flex-wrap: wrap;
+        gap: 10px;
+      }
+
+      .brand {
+        font-family: "Space Grotesk", "Segoe UI", sans-serif;
+        letter-spacing: 0.07em;
+        font-size: 12px;
+        font-weight: 700;
+        text-transform: uppercase;
+        color: var(--accent);
+      }
+
+      .status {
+        flex: 1 1 180px;
+        min-width: 0;
+        font-size: 12px;
+        color: var(--text-muted);
+        white-space: normal;
+        overflow-wrap: anywhere;
+      }
+
+      .icon-btn {
+        border: 1px solid var(--line);
+        background: var(--bg-soft);
+        color: var(--text);
+        border-radius: 10px;
+        font-size: 12px;
+        height: 30px;
+        min-width: 30px;
+        padding: 0 9px;
+        cursor: pointer;
+      }
+
+      .icon-btn:hover {
+        border-color: var(--accent);
+      }
+
+      .chat {
+        overflow: auto;
+        padding: 14px;
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        min-height: 0;
+      }
+
+      .msg {
+        border: 1px solid var(--line);
+        background: rgba(27, 36, 48, 0.68);
+        border-radius: var(--radius);
+        box-shadow: var(--shadow);
+        padding: 10px 12px;
+        animation: pop 180ms ease-out;
+      }
+
+      .msg.user {
+        border-color: rgba(58, 183, 166, 0.45);
+        background: rgba(58, 183, 166, 0.14);
+      }
+
+      .msg-header {
+        display: flex;
+        justify-content: space-between;
+        gap: 10px;
+        margin-bottom: 6px;
+      }
+
+      .role {
+        font-size: 11px;
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
+        color: var(--text-muted);
+      }
+
+      .msg-body {
+        font-size: 13px;
+        line-height: 1.5;
+        white-space: pre-wrap;
+        overflow-wrap: anywhere;
+        word-break: break-word;
+      }
+
+      .stream-trace {
+        margin-top: 8px;
+        border-top: 1px dashed var(--line);
+        padding-top: 8px;
+      }
+
+      .stream-line {
+        font-size: 11px;
+        line-height: 1.4;
+        color: var(--text-muted);
+        white-space: pre-wrap;
+        overflow-wrap: anywhere;
+      }
+
+      .stream-line.reasoning {
+        color: var(--accent-2);
+      }
+
+      .stream-line.tool {
+        color: var(--success);
+      }
+
+      .msg-body code {
+        background: rgba(13, 17, 23, 0.7);
+        border: 1px solid var(--line);
+        border-radius: 6px;
+        padding: 0 4px;
+        font-family: "IBM Plex Mono", Consolas, monospace;
+      }
+
+      .tool-runner {
+        border: 1px solid var(--line);
+        border-radius: var(--radius);
+        background: rgba(21, 27, 35, 0.9);
+        padding: 10px;
+      }
+
+      .tool-entry {
+        font-size: 12px;
+        line-height: 1.4;
+        padding: 4px 0;
+        color: var(--text-muted);
+      }
+
+      .tool-entry.running {
+        color: var(--accent-2);
+      }
+
+      .tool-entry.done {
+        color: var(--success);
+      }
+
+      .tool-entry.error {
+        color: var(--danger);
+      }
+
+      .thinking {
+        margin-top: 8px;
+        border-top: 1px dashed var(--line);
+        padding-top: 8px;
+      }
+
+      .thinking summary {
+        cursor: pointer;
+        color: var(--text-muted);
+        font-size: 12px;
+      }
+
+      .thinking pre {
+        white-space: pre-wrap;
+        margin: 8px 0 0;
+        font-size: 12px;
+        color: #ccd8e7;
+        max-height: 180px;
+        overflow: auto;
+      }
+
+      .composer {
+        border-top: 1px solid var(--line);
+        background: rgba(13, 17, 23, 0.94);
+        padding: 10px;
+        display: grid;
+        gap: 8px;
+      }
+
+      .runtime-stats {
+        font-size: 11px;
+        color: var(--text-muted);
+      }
+
+      .attachments {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 6px;
+      }
+
+      .chip {
+        border: 1px solid var(--line);
+        border-radius: 999px;
+        font-size: 11px;
+        padding: 4px 8px;
+        color: var(--text-muted);
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+      }
+
+      .chip button {
+        background: transparent;
+        border: 0;
+        color: var(--danger);
+        cursor: pointer;
+        font-size: 12px;
+      }
+
+      textarea {
+        width: 100%;
+        min-height: 84px;
+        max-height: 220px;
+        resize: vertical;
+        border: 1px solid var(--line);
+        border-radius: 12px;
+        background: var(--bg-soft);
+        color: var(--text);
+        font: inherit;
+        font-size: 13px;
+        line-height: 1.5;
+        padding: 10px;
+      }
+
+      .actions {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+      }
+
+      .btn {
+        border: 1px solid var(--line);
+        border-radius: 10px;
+        background: var(--bg-elev);
+        color: var(--text);
+        cursor: pointer;
+        font-size: 12px;
+        padding: 8px 10px;
+        min-height: 32px;
+      }
+
+      .btn.primary {
+        border-color: rgba(58, 183, 166, 0.7);
+        background: linear-gradient(145deg, rgba(58, 183, 166, 0.36), rgba(58, 183, 166, 0.2));
+      }
+
+      .btn.warn {
+        border-color: rgba(234, 90, 116, 0.7);
+      }
+
+      .btn:disabled {
+        opacity: 0.55;
+        cursor: not-allowed;
+      }
+
+      .context-divider {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        color: var(--text-muted);
+        font-size: 11px;
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
+      }
+
+      .context-divider::before,
+      .context-divider::after {
+        content: "";
+        height: 1px;
+        flex: 1;
+        background: var(--line);
+      }
+
+      .drawer {
+        position: fixed;
+        inset: 0;
+        background: rgba(0, 0, 0, 0.45);
+        display: none;
+      }
+
+      .drawer.open {
+        display: block;
+      }
+
+      .panel {
+        position: absolute;
+        right: 0;
+        top: 0;
+        height: 100%;
+        width: min(100vw, 360px);
+        background: #0e141d;
+        border-left: 1px solid var(--line);
+        padding: 14px;
+        overflow: auto;
+      }
+
+      .field {
+        margin-bottom: 10px;
+      }
+
+      .field label {
+        display: block;
+        font-size: 11px;
+        color: var(--text-muted);
+        margin-bottom: 4px;
+      }
+
+      .field input,
+      .field select,
+      .field textarea {
+        width: 100%;
+        border: 1px solid var(--line);
+        border-radius: 10px;
+        background: var(--bg-soft);
+        color: var(--text);
+        font: inherit;
+        font-size: 12px;
+        padding: 8px;
+      }
+
+      .approve {
+        margin-top: 8px;
+        border: 1px dashed var(--line);
+        border-radius: 10px;
+        padding: 8px;
+      }
+
+      .approve pre {
+        margin: 0;
+        font-size: 11px;
+        max-height: 120px;
+        overflow: auto;
+        color: #c6d3e3;
+      }
+
+      @keyframes pop {
+        from {
+          opacity: 0;
+          transform: translateY(6px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      @media (max-width: 460px) {
+        .topbar {
+          gap: 8px;
+        }
+
+        .brand {
+          font-size: 11px;
+        }
+
+        .icon-btn {
+          margin-left: auto;
+        }
+
+        .actions .btn {
+          flex: 1 1 120px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="app">
+      <div class="topbar">
+        <div class="brand">Viga Agent</div>
+        <div class="status" id="selectionStatus">Loading selection...</div>
+        <button class="icon-btn" id="exportLogBtn">Export Log</button>
+        <button class="icon-btn" id="settingsBtn">Settings</button>
+      </div>
+
+      <div class="chat" id="chat"></div>
+
+      <div class="composer">
+        <div class="runtime-stats" id="runtimeStats">Context: 0 msgs</div>
+        <div class="attachments" id="attachments"></div>
+        <textarea id="prompt" placeholder="Describe what you want to design, optimize, or review..."></textarea>
+        <div class="actions">
+          <input id="imageInput" type="file" accept="image/*" multiple style="display:none" />
+          <button class="btn" id="addImageBtn">Attach Image</button>
+          <button class="btn" id="cleanContextBtn">Clean Context</button>
+          <button class="btn warn" id="pauseBtn" disabled>Pause</button>
+          <button class="btn primary" id="sendBtn">Send</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="drawer" id="settingsDrawer">
+      <div class="panel">
+        <h3 style="margin:0 0 12px; font-family:'Space Grotesk', sans-serif;">Global Settings</h3>
+        <div class="field">
+          <label for="provider">Provider</label>
+          <select id="provider">
+            <option value="openai">OpenAI Compatible</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="baseUrl">Base URL</label>
+          <input id="baseUrl" placeholder="https://api.openai.com/v1" />
+        </div>
+        <div class="field">
+          <label for="apiKey">API Key</label>
+          <input id="apiKey" type="password" placeholder="sk-..." />
+        </div>
+        <div class="field">
+          <label for="model">Model</label>
+          <input id="model" placeholder="gpt-4o" />
+        </div>
+        <div class="field">
+          <label for="temperature">Temperature (0-2)</label>
+          <input id="temperature" type="number" min="0" max="2" step="0.1" />
+        </div>
+        <div class="field">
+          <label for="systemPrompt">System Prompt</label>
+          <textarea id="systemPrompt" rows="9"></textarea>
+        </div>
+        <div class="actions">
+          <button class="btn" id="loadModelsBtn">Load Models</button>
+          <button class="btn primary" id="saveSettingsBtn">Save</button>
+          <button class="btn" id="closeSettingsBtn">Close</button>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      const state = {
+        rpcPending: new Map(),
+        requestCounter: 0,
+        uiLogCounter: 0,
+        uiRuntimeLog: [],
+        messages: [],
+        settings: null,
+        selection: null,
+        images: [],
+        running: false,
+        pendingApproval: null,
+        stopRequested: false,
+        streamAbortController: null,
+        autoScrollPinned: true,
+        contextCutoffIndex: null,
+        contextDividerEl: null,
+        sessionStartedAt: new Date().toISOString()
+      };
+
+      const toolDefs = [
+        {
+          type: "function",
+          function: {
+            name: "get_current_selection",
+            description: "Get currently selected Figma nodes and compact VF-DSL context.",
+            parameters: { type: "object", properties: {}, additionalProperties: false },
+            strict: true
+          }
+        },
+        {
+          type: "function",
+          function: {
+            name: "inspect_node_tree",
+            description: "Inspect target node tree with configurable depth and return VF-DSL.",
+            parameters: {
+              type: "object",
+              properties: {
+                node_id: { type: "string" },
+                depth: { type: "number" }
+              },
+              required: ["node_id"],
+              additionalProperties: false
+            },
+            strict: true
+          }
+        },
+        {
+          type: "function",
+          function: {
+            name: "get_visual_snapshot",
+            description: "Export a node as PNG for multimodal review. Image is attached as image_url content.",
+            parameters: {
+              type: "object",
+              properties: {
+                node_id: { type: "string" }
+              },
+              additionalProperties: false
+            },
+            strict: true
+          }
+        },
+        {
+          type: "function",
+          function: {
+            name: "generate_design_from_dsl",
+            description: "Generate Figma nodes from VF-DSL into target parent (defaults to selected container or page).",
+            parameters: {
+              type: "object",
+              properties: {
+                dsl_string: { type: "string" },
+                parent_id: { type: "string" }
+              },
+              required: ["dsl_string"],
+              additionalProperties: false
+            },
+            strict: true
+          }
+        },
+        {
+          type: "function",
+          function: {
+            name: "update_node_properties",
+            description: "Update existing node properties like fill/text/layout/gap/padding.",
+            parameters: {
+              type: "object",
+              properties: {
+                node_id: { type: "string" },
+                properties: { type: "object", additionalProperties: true }
+              },
+              required: ["node_id", "properties"],
+              additionalProperties: false
+            },
+            strict: true
+          }
+        },
+        {
+          type: "function",
+          function: {
+            name: "execute_vf_actions",
+            description: "Execute batched VF Actions DSL for create/update/set/reparent/group/boolean/flatten/export and advanced property patches.",
+            parameters: {
+              type: "object",
+              properties: {
+                actions: {
+                  type: "array",
+                  items: {
+                    type: "object",
+                    properties: {
+                      type: { type: "string" }
+                    },
+                    required: ["type"],
+                    additionalProperties: true
+                  }
+                },
+                select_result: { type: "boolean" }
+              },
+              required: ["actions"],
+              additionalProperties: false
+            },
+            strict: true
+          }
+        },
+        {
+          type: "function",
+          function: {
+            name: "delete_nodes",
+            description: "Delete nodes by id list.",
+            parameters: {
+              type: "object",
+              properties: {
+                node_ids: { type: "array", items: { type: "string" } }
+              },
+              required: ["node_ids"],
+              additionalProperties: false
+            },
+            strict: true
+          }
+        },
+        {
+          type: "function",
+          function: {
+            name: "ask_user_for_clarification",
+            description: "Ask user to clarify ambiguous instruction.",
+            parameters: {
+              type: "object",
+              properties: {
+                prompt: { type: "string" }
+              },
+              required: ["prompt"],
+              additionalProperties: false
+            },
+            strict: true
+          }
+        },
+        {
+          type: "function",
+          function: {
+            name: "focus_and_zoom_to_node",
+            description: "Focus viewport on a specific node.",
+            parameters: {
+              type: "object",
+              properties: {
+                node_id: { type: "string" }
+              },
+              required: ["node_id"],
+              additionalProperties: false
+            },
+            strict: true
+          }
+        }
+      ];
+
+      const destructiveTools = new Set(["generate_design_from_dsl", "update_node_properties", "execute_vf_actions", "delete_nodes"]);
+
+      const chatEl = document.getElementById("chat");
+      const promptEl = document.getElementById("prompt");
+      const attachmentsEl = document.getElementById("attachments");
+      const selectionStatusEl = document.getElementById("selectionStatus");
+      const settingsDrawerEl = document.getElementById("settingsDrawer");
+      const sendBtnEl = document.getElementById("sendBtn");
+      const pauseBtnEl = document.getElementById("pauseBtn");
+      const cleanContextBtnEl = document.getElementById("cleanContextBtn");
+      const runtimeStatsEl = document.getElementById("runtimeStats");
+      const exportLogBtnEl = document.getElementById("exportLogBtn");
+
+      const AUTO_SCROLL_THRESHOLD = 28;
+      const MAX_CONTEXT_MESSAGES = 28;
+      const MODEL_CONTEXT_CHAR_BUDGET = 26000;
+      const TOOL_RESULT_CHAR_LIMIT = 3200;
+      const MAX_PRESERVED_IMAGE_MESSAGES = 2;
+      const MAX_UI_RUNTIME_LOG_ENTRIES = 12000;
+
+      chatEl.addEventListener(
+        "scroll",
+        () => {
+          state.autoScrollPinned = isChatNearBottom();
+        },
+        { passive: true }
+      );
+
+      document.getElementById("settingsBtn").addEventListener("click", () => settingsDrawerEl.classList.add("open"));
+      exportLogBtnEl.addEventListener("click", () => {
+        void exportRuntimeLog();
+      });
+      document.getElementById("closeSettingsBtn").addEventListener("click", () => settingsDrawerEl.classList.remove("open"));
+      document.getElementById("settingsDrawer").addEventListener("click", (e) => {
+        if (e.target === settingsDrawerEl) {
+          settingsDrawerEl.classList.remove("open");
+        }
+      });
+
+      document.getElementById("saveSettingsBtn").addEventListener("click", async () => {
+        const next = readSettingsForm();
+        await rpc("save-settings", next);
+        state.settings = next;
+        notify("Settings saved.");
+      });
+
+      document.getElementById("loadModelsBtn").addEventListener("click", async () => {
+        try {
+          const models = await fetchModelList();
+          if (models.length > 0) {
+            document.getElementById("model").value = models[0].id;
+            notify(`Loaded ${models.length} models.`);
+          } else {
+            notify("No models returned by endpoint.", true);
+          }
+        } catch (error) {
+          notify(`Load models failed: ${error.message}`, true);
+        }
+      });
+
+      document.getElementById("addImageBtn").addEventListener("click", () => {
+        document.getElementById("imageInput").click();
+      });
+
+      document.getElementById("imageInput").addEventListener("change", async (event) => {
+        const files = Array.from(event.target.files || []);
+        for (const file of files) {
+          const dataUrl = await fileToDataUrl(file);
+          state.images.push({
+            id: `${Date.now()}-${Math.random().toString(16).slice(2)}`,
+            name: file.name,
+            dataUrl
+          });
+        }
+        event.target.value = "";
+        renderAttachmentChips();
+      });
+
+      cleanContextBtnEl.addEventListener("click", () => {
+        toggleContextClean();
+      });
+
+      pauseBtnEl.addEventListener("click", () => {
+        requestPause();
+      });
+
+      sendBtnEl.addEventListener("click", () => {
+        void sendPrompt();
+      });
+
+      promptEl.addEventListener("keydown", (event) => {
+        if (event.key === "Enter" && !event.shiftKey) {
+          event.preventDefault();
+          void sendPrompt();
+        }
+      });
+
+      window.onmessage = (event) => {
+        const message = event.data.pluginMessage;
+        if (!message) {
+          logUiEvent("ui.window.message.ignored", { reason: "missing-plugin-message" });
+          return;
+        }
+
+        if (message.type === "rpc-response") {
+          const entry = state.rpcPending.get(message.requestId);
+          if (!entry) {
+            logUiEvent("rpc.response.unknown-request", {
+              requestId: message.requestId,
+              ok: Boolean(message.ok)
+            });
+            return;
+          }
+          state.rpcPending.delete(message.requestId);
+          if (message.ok) {
+            logUiEvent("rpc.response.ok", {
+              requestId: message.requestId,
+              action: entry.action,
+              durationMs: Date.now() - entry.startedAt,
+              data: summarizeForLog(message.data)
+            });
+            entry.resolve(message.data);
+          } else {
+            logUiEvent("rpc.response.error", {
+              requestId: message.requestId,
+              action: entry.action,
+              durationMs: Date.now() - entry.startedAt,
+              error: message.error || "RPC failed"
+            });
+            entry.reject(new Error(message.error || "RPC failed"));
+          }
+          return;
+        }
+
+        if (message.type === "event") {
+          logUiEvent("plugin.event.received", {
+            event: message.event,
+            payload: summarizeForLog(message.payload)
+          });
+          if (message.event === "selection-changed") {
+            state.selection = message.payload;
+            renderSelectionStatus();
+            refreshRuntimeStats();
+          }
+          if (message.event === "clarification-request") {
+            pushUiMessage("assistant", `Need clarification: ${message.payload.prompt}`);
+          }
+          if (message.event === "runtime-log-entry") {
+            logUiEvent("plugin.runtime-log.stream", {
+              pluginSeq: message.payload?.seq,
+              pluginEvent: message.payload?.event
+            });
+          }
+        }
+      };
+
+      async function init() {
+        logUiEvent("ui.init.start", {});
+        const boot = await rpc("bootstrap", {});
+        state.settings = boot.settings;
+        state.selection = boot.selection;
+        logUiEvent("ui.init.bootstrap-loaded", {
+          hasApiKey: Boolean(boot.settings?.apiKey),
+          model: boot.settings?.model,
+          selectionCount: boot.selection?.selectionCount ?? 0
+        });
+        fillSettingsForm(state.settings);
+        renderSelectionStatus();
+        updateCleanContextButton();
+        updateRunButtons();
+        refreshRuntimeStats();
+        pushUiMessage(
+          "assistant",
+          "Viga is ready. I can generate new UI from text/image, improve selected nodes, and run visual QA with tool calls."
+        );
+        logUiEvent("ui.init.done", {});
+      }
+
+      async function sendPrompt() {
+        logUiEvent("prompt.send.requested", {
+          running: state.running,
+          textLength: promptEl.value.trim().length,
+          imageCount: state.images.length
+        });
+        if (state.running) {
+          logUiEvent("prompt.send.skipped", { reason: "already-running" });
+          return;
+        }
+        const text = promptEl.value.trim();
+        if (!text && state.images.length === 0) {
+          logUiEvent("prompt.send.rejected", { reason: "empty-input" });
+          notify("Type a prompt or attach an image.", true);
+          return;
+        }
+        if (!state.settings?.apiKey) {
+          logUiEvent("prompt.send.rejected", { reason: "missing-api-key" });
+          notify("Set your API key first.", true);
+          settingsDrawerEl.classList.add("open");
+          return;
+        }
+
+        const userContent = buildUserContent(text, state.images);
+        const uiPreview = text || `Sent ${state.images.length} image(s)`;
+        pushUiMessage("user", uiPreview);
+
+        state.messages.push({ role: "user", content: userContent });
+        promptEl.value = "";
+        state.images = [];
+        renderAttachmentChips();
+        refreshRuntimeStats();
+
+        state.running = true;
+        state.stopRequested = false;
+        updateRunButtons();
+        const toolPanel = pushToolPanel();
+        logUiEvent("prompt.send.accepted", {
+          textLength: text.length,
+          imageCount: state.images.length,
+          messageCount: state.messages.length
+        });
+
+        try {
+          await runAgentLoop(toolPanel);
+        } catch (error) {
+          logUiEvent("agent.loop.crashed", { error });
+          pushUiMessage("assistant", `Error: ${formatUiError(error)}`);
+        } finally {
+          state.running = false;
+          state.stopRequested = false;
+          state.streamAbortController = null;
+          updateRunButtons();
+          logUiEvent("prompt.send.finished", { totalMessages: state.messages.length });
+        }
+      }
+
+      async function runAgentLoop(toolPanel) {
+        const maxTurns = 10;
+        let turn = 0;
+        logUiEvent("agent.loop.start", { maxTurns, messageCount: state.messages.length });
+
+        while (turn < maxTurns) {
+          if (state.stopRequested) {
+            logUiEvent("agent.loop.stopped", { reason: "user-stop", turn });
+            pushUiMessage("assistant", "Generation paused.");
+            return;
+          }
+
+          turn += 1;
+          logUiEvent("agent.turn.start", { turn, contextMessages: getMessagesForModel().length });
+          const streamView = createAssistantStreamingView();
+          const assistantMessage = await callChatStream(getMessagesForModel(), {
+            onContentDelta(delta) {
+              streamView.addContent(delta);
+            },
+            onReasoningDelta(delta) {
+              streamView.addReasoning(delta);
+            },
+            onToolCallDelta(delta) {
+              streamView.addTrace("tool", delta);
+            },
+            onEvent(eventName) {
+              streamView.addTrace("event", eventName);
+            }
+          });
+
+          if (!assistantMessage) {
+            logUiEvent("agent.turn.error", { turn, reason: "empty-response" });
+            throw new Error("Model returned empty response.");
+          }
+
+          if (assistantMessage.aborted) {
+            logUiEvent("agent.turn.aborted", {
+              turn,
+              partialContentLength: (assistantMessage.content || "").length
+            });
+            streamView.finalize();
+            const partial = {
+              role: "assistant",
+              content: assistantMessage.content ?? "",
+              tool_calls: [],
+              reasoning: assistantMessage.reasoning,
+              reasoning_details: assistantMessage.reasoning_details
+            };
+            if (partial.content || partial.reasoning) {
+              state.messages.push(partial);
+              refreshRuntimeStats();
+            }
+            pushUiMessage("assistant", "Generation paused.");
+            return;
+          }
+
+          const normalizedAssistant = {
+            role: "assistant",
+            content: assistantMessage.content ?? "",
+            tool_calls: assistantMessage.tool_calls,
+            reasoning: assistantMessage.reasoning,
+            reasoning_details: assistantMessage.reasoning_details
+          };
+
+          state.messages.push(normalizedAssistant);
+          refreshRuntimeStats();
+          logUiEvent("agent.turn.assistant-message", {
+            turn,
+            contentLength: normalizedAssistant.content.length,
+            toolCallCount: Array.isArray(normalizedAssistant.tool_calls) ? normalizedAssistant.tool_calls.length : 0
+          });
+
+          if (assistantMessage.usage) {
+            addToolStatus(
+              toolPanel,
+              "done",
+              `Usage in=${assistantMessage.usage.input_tokens || 0} out=${assistantMessage.usage.output_tokens || 0} total=${assistantMessage.usage.total_tokens || 0}`
+            );
+          }
+
+          const toolCalls = assistantMessage.tool_calls || [];
+          if (toolCalls.length === 0) {
+            logUiEvent("agent.turn.completed", { turn, reason: "no-tool-calls" });
+            streamView.finalize();
+            return;
+          }
+
+          streamView.finalize();
+
+          for (const call of toolCalls) {
+            if (state.stopRequested) {
+              logUiEvent("agent.tool-loop.stopped", { turn, reason: "user-stop" });
+              pushUiMessage("assistant", "Generation paused.");
+              return;
+            }
+
+            if (!call.function || call.type !== "function") {
+              logUiEvent("agent.tool.skip", {
+                turn,
+                reason: "non-function-call",
+                call
+              });
+              continue;
+            }
+            const toolName = call.function.name;
+            addToolStatus(toolPanel, "running", `Executing ${toolName}...`);
+            logUiEvent("agent.tool.start", {
+              turn,
+              toolName,
+              toolCallId: call.id
+            });
+
+            let resultText;
+            let args;
+            try {
+              args = call.function.arguments ? JSON.parse(call.function.arguments) : {};
+            } catch (error) {
+              const parseError = `Invalid tool arguments JSON: ${formatUiError(error)}`;
+              resultText = JSON.stringify({ error: parseError });
+              addToolStatus(toolPanel, "error", `${toolName} failed: ${parseError}`);
+              state.messages.push({
+                role: "tool",
+                tool_call_id: call.id,
+                name: toolName,
+                content: resultText
+              });
+              refreshRuntimeStats();
+              logUiEvent("agent.tool.args-parse-error", {
+                turn,
+                toolName,
+                toolCallId: call.id,
+                parseError
+              });
+              continue;
+            }
+
+            try {
+              if (destructiveTools.has(toolName)) {
+                const approved = await waitForApproval(toolName, args);
+                if (!approved) {
+                  logUiEvent("agent.tool.rejected", { turn, toolName, toolCallId: call.id });
+                  throw new Error("User rejected this modification.");
+                }
+                logUiEvent("agent.tool.approved", { turn, toolName, toolCallId: call.id });
+              }
+
+              const result = await rpc("execute-tool", { name: toolName, arguments: args });
+              logUiEvent("agent.tool.rpc-result", {
+                turn,
+                toolName,
+                toolCallId: call.id,
+                result: summarizeForLog(result)
+              });
+
+              if (toolName === "get_visual_snapshot" && result.bytes) {
+                const dataUrl = await bytesToDataUrl(result.bytes, result.mimeType || "image/png");
+
+                resultText = JSON.stringify({
+                  nodeId: result.nodeId,
+                  mimeType: result.mimeType,
+                  status: "success",
+                  info: "Snapshot captured and attached as image_url in next message."
+                });
+
+                state.messages.push({
+                  role: "tool",
+                  tool_call_id: call.id,
+                  name: toolName,
+                  content: resultText
+                });
+
+                state.messages.push({
+                  role: "user",
+                  content: [
+                    { type: "text", text: `Here is the visual snapshot for node ${result.nodeId}:` },
+                    { type: "image_url", image_url: { url: dataUrl, detail: "auto" } }
+                  ]
+                });
+
+                addToolStatus(toolPanel, "done", `${toolName} completed (image_url attached).`);
+                logUiEvent("agent.tool.done", {
+                  turn,
+                  toolName,
+                  toolCallId: call.id,
+                  imageAttached: true
+                });
+                continue;
+              } else {
+                // Safety check for other tools returning bytes
+                if (result && result.bytes) {
+                  const { bytes, ...safeResult } = result;
+                  resultText = JSON.stringify({
+                    ...safeResult,
+                    info: "Raw bytes omitted from tool output."
+                  });
+                } else {
+                  resultText = JSON.stringify(result);
+                }
+              }
+
+              addToolStatus(toolPanel, "done", `${toolName} completed.`);
+              logUiEvent("agent.tool.done", {
+                turn,
+                toolName,
+                toolCallId: call.id,
+                imageAttached: false
+              });
+            } catch (error) {
+              resultText = JSON.stringify({ error: formatUiError(error) });
+              addToolStatus(toolPanel, "error", `${toolName} failed: ${formatUiError(error)}`);
+              logUiEvent("agent.tool.failed", {
+                turn,
+                toolName,
+                toolCallId: call.id,
+                error
+              });
+            }
+
+            state.messages.push({
+              role: "tool",
+              tool_call_id: call.id,
+              name: toolName,
+              content: sanitizeToolResultForContext(resultText)
+            });
+            refreshRuntimeStats();
+          }
+
+          logUiEvent("agent.turn.done", { turn });
+        }
+
+        logUiEvent("agent.loop.stopped", { reason: "max-turns", maxTurns });
+        pushUiMessage("assistant", "Stopped after max tool loop iterations.");
+      }
+
+      async function callChatStream(messages, handlers) {
+        const settings = readSettingsForm();
+        state.settings = settings;
+
+        const endpoint = normalizeEndpoint(settings.baseUrl, "/chat/completions");
+        const payload = {
+          model: settings.model,
+          messages,
+          tools: toolDefs,
+          tool_choice: "auto",
+          parallel_tool_calls: true,
+          temperature: settings.temperature,
+          reasoning: { enabled: true, exclude: false },
+          stream: true,
+          stream_options: { include_usage: true }
+        };
+
+        const headers = {
+          "Content-Type": "application/json",
+          "Authorization": `Bearer ${settings.apiKey}`,
+          "Accept": "text/event-stream",
+          "Cache-Control": "no-cache"
+        };
+
+        const devMessage = {
+          role: "system",
+          content: buildDeveloperPrompt(settings.systemPrompt)
+        };
+
+        payload.messages = [devMessage].concat(messages);
+        logUiEvent("llm.request.prepare", {
+          endpoint,
+          model: settings.model,
+          temperature: settings.temperature,
+          messageCount: payload.messages.length,
+          toolsCount: toolDefs.length,
+          streaming: payload.stream
+        });
+
+        let contentText = "";
+        let reasoningText = "";
+        const toolCalls = new Map();
+        let finalReasoningDetails;
+        let sawAnyDelta = false;
+        let lastNonDataLine = "";
+        let finalUsage = null;
+        const abortController = new AbortController();
+        state.streamAbortController = abortController;
+
+        try {
+          const requestStartedAt = Date.now();
+          const response = await fetch(endpoint, {
+            method: "POST",
+            headers,
+            body: JSON.stringify(payload),
+            signal: abortController.signal
+          });
+
+          logUiEvent("llm.request.response", {
+            status: response.status,
+            ok: response.ok,
+            durationMs: Date.now() - requestStartedAt
+          });
+
+          if (!response.ok) {
+            const text = await response.text();
+            throw new Error(`LLM request failed (${response.status}): ${text.slice(0, 600)}`);
+          }
+
+          if (!response.body) {
+            throw new Error("Streaming response body is empty.");
+          }
+
+          const reader = response.body.getReader();
+          const decoder = new TextDecoder();
+          let buffer = "";
+
+          while (true) {
+            const { value, done } = await reader.read();
+            if (done) {
+              break;
+            }
+            buffer += decoder.decode(value, { stream: true });
+
+            let splitIndex = buffer.indexOf("\n");
+            while (splitIndex >= 0) {
+              const rawLine = buffer.slice(0, splitIndex);
+              buffer = buffer.slice(splitIndex + 1);
+              splitIndex = buffer.indexOf("\n");
+
+              const line = rawLine.trim();
+              if (!line.startsWith("data:")) {
+                if (line.length > 0) {
+                  lastNonDataLine = line;
+                  try {
+                    const json = JSON.parse(line);
+                    if (json.error) {
+                      throw new Error(`API Error: ${json.error.message || JSON.stringify(json.error)}`);
+                    }
+                  } catch (e) {
+                    if (e.message.startsWith("API Error")) throw e;
+                  }
+                }
+                continue;
+              }
+
+              const data = line.slice(5).trim();
+              if (!data) {
+                continue;
+              }
+              if (data === "[DONE]") {
+                break;
+              }
+
+              let event;
+              try {
+                event = JSON.parse(data);
+              } catch (_error) {
+                continue;
+              }
+
+              const choice = event.choices?.[0];
+              const delta = choice?.delta;
+              if (event.object || event.id) {
+                const reason = choice?.finish_reason;
+                if (reason && reason !== "null") {
+                  handlers.onEvent?.(String(reason));
+                }
+              }
+              if (event.usage) {
+                finalUsage = event.usage;
+              }
+              if (!delta) {
+                continue;
+              }
+
+              sawAnyDelta = true;
+
+              if (typeof delta.content === "string" && delta.content.length > 0) {
+                contentText += delta.content;
+                handlers.onContentDelta?.(delta.content);
+                logUiEvent("llm.stream.delta.content", {
+                  deltaLength: delta.content.length,
+                  totalLength: contentText.length,
+                  preview: truncateText(delta.content, 160)
+                });
+              }
+
+              const reasoningDelta = typeof delta.reasoning === "string" ? delta.reasoning : typeof delta.reasoning_content === "string" ? delta.reasoning_content : "";
+              if (reasoningDelta) {
+                reasoningText += reasoningDelta;
+                handlers.onReasoningDelta?.(reasoningDelta);
+                logUiEvent("llm.stream.delta.reasoning", {
+                  deltaLength: reasoningDelta.length,
+                  totalLength: reasoningText.length,
+                  preview: truncateText(reasoningDelta, 160)
+                });
+              }
+
+              if (Array.isArray(delta.tool_calls)) {
+                for (const partial of delta.tool_calls) {
+                  const index = Number.isFinite(partial.index) ? partial.index : toolCalls.size;
+                  const current = toolCalls.get(index) || {
+                    id: partial.id || `tool_${index}`,
+                    type: partial.type || "function",
+                    function: {
+                      name: partial.function?.name || "",
+                      arguments: ""
+                    }
+                  };
+
+                  if (partial.id) {
+                    current.id = partial.id;
+                  }
+                  if (partial.type) {
+                    current.type = partial.type;
+                  }
+                  if (partial.function?.name) {
+                    current.function.name = partial.function.name;
+                  }
+                  if (typeof partial.function?.arguments === "string") {
+                    current.function.arguments += partial.function.arguments;
+                  }
+
+                  toolCalls.set(index, current);
+
+                  const traceName = current.function.name || current.id;
+                  const traceArgs = typeof partial.function?.arguments === "string" ? partial.function.arguments : "";
+                  handlers.onToolCallDelta?.(`${traceName}${traceArgs ? ` ${traceArgs}` : ""}`);
+                  logUiEvent("llm.stream.delta.tool-call", {
+                    toolName: current.function.name,
+                    toolId: current.id,
+                    argsDeltaLength: traceArgs.length,
+                    argsTotalLength: current.function.arguments.length
+                  });
+                }
+              }
+
+              if (Array.isArray(delta.reasoning_details)) {
+                finalReasoningDetails = delta.reasoning_details;
+              }
+            }
+          }
+
+          if (!sawAnyDelta) {
+            throw new Error(`No stream deltas received. Last output: ${lastNonDataLine.slice(0, 500)}`);
+          }
+
+          logUiEvent("llm.stream.completed", {
+            contentLength: contentText.length,
+            reasoningLength: reasoningText.length,
+            toolCallCount: toolCalls.size,
+            usage: finalUsage
+          });
+
+          return {
+            role: "assistant",
+            content: contentText,
+            tool_calls: Array.from(toolCalls.entries())
+              .sort((a, b) => a[0] - b[0])
+              .map(([, value]) => value),
+            reasoning: reasoningText,
+            reasoning_details: finalReasoningDetails,
+            usage: finalUsage
+          };
+
+        } catch (error) {
+          if (isAbortError(error)) {
+            logUiEvent("llm.stream.aborted", {
+              contentLength: contentText.length,
+              reasoningLength: reasoningText.length
+            });
+            return {
+              role: "assistant",
+              content: contentText,
+              tool_calls: [],
+              reasoning: reasoningText,
+              reasoning_details: finalReasoningDetails,
+              aborted: true,
+              usage: finalUsage
+            };
+          }
+
+          // Fallback to non-streaming
+          console.warn("Stream failed, attempting fallback:", error);
+          logUiEvent("llm.stream.failed", { error });
+          handlers.onEvent?.("Stream failed, trying fallback...");
+
+          payload.stream = false;
+          delete headers["Accept"];
+          
+          const fbResponse = await fetch(endpoint, {
+            method: "POST",
+            headers,
+            body: JSON.stringify(payload)
+          });
+          logUiEvent("llm.fallback.response", { status: fbResponse.status, ok: fbResponse.ok });
+
+          if (!fbResponse.ok) {
+            const text = await fbResponse.text();
+            throw new Error(`Fallback failed (${fbResponse.status}): ${text.slice(0, 600)} (Original error: ${error.message})`);
+          }
+
+          const data = await fbResponse.json();
+          const choice = data.choices?.[0];
+          if (!choice || !choice.message) {
+             throw new Error("Fallback response empty or invalid.");
+           }
+
+          logUiEvent("llm.fallback.completed", {
+            contentLength: (choice.message.content || "").length,
+            toolCallCount: Array.isArray(choice.message.tool_calls) ? choice.message.tool_calls.length : 0,
+            usage: data.usage || null
+          });
+
+          // Update UI with full content
+          if (choice.message.content) {
+            handlers.onContentDelta?.(choice.message.content);
+          }
+          if (choice.message.tool_calls) {
+             choice.message.tool_calls.forEach((tc) => {
+                handlers.onToolCallDelta?.(tc.function.name);
+              });
+           }
+
+          return {
+            ...choice.message,
+            usage: data.usage || null
+          };
+        } finally {
+          if (state.streamAbortController === abortController) {
+            state.streamAbortController = null;
+          }
+        }
+      }
+
+      function buildDeveloperPrompt(systemPrompt) {
+        const selectionDsl = state.selection?.selectedNodesDsl || "";
+        const selectionBounds = Array.isArray(state.selection?.selectedBounds) ? state.selection.selectedBounds : [];
+        const selectionSummaries = Array.isArray(state.selection?.selectedNodeSummaries) ? state.selection.selectedNodeSummaries : [];
+        const selectionHint = state.selection
+          ? `Selected node count: ${state.selection.selectionCount}. Page: ${state.selection.pageName}.`
+          : "Selection unknown.";
+        const boundsHint = selectionBounds.length
+          ? `Selected bounds: ${selectionBounds.map((b, i) => `#${i + 1} x=${Math.round(b.x)} y=${Math.round(b.y)} w=${Math.round(b.width)} h=${Math.round(b.height)}`).join("; ")}`
+          : "Selected bounds: unavailable.";
+        const summaryHint = selectionSummaries.length
+          ? `Selected node summaries: ${selectionSummaries
+              .map((n, i) => `#${i + 1} id=${n.nodeId} type=${n.nodeType} name=${JSON.stringify(n.name)}`)
+              .join("; ")}`
+          : "Selected node summaries: unavailable.";
+
+        return [
+          systemPrompt,
+          "You are operating inside a Figma plugin and must use tools for document operations.",
+          "Always prefer get_current_selection before modifying unknown nodes.",
+          "When tool output is long, reason on summaries first and only request deeper inspect_node_tree when needed.",
+          "Minimize redundant tool calls and avoid repeating unchanged full DSL dumps.",
+          "When user says to draw inside/in the middle of selected node, call generate_design_from_dsl with parent_id set to selected node id, and avoid absolute page coordinates unless explicitly requested.",
+          "When changing existing design, explain intent briefly and call update_node_properties, execute_vf_actions, or generate_design_from_dsl.",
+          "For advanced control over many properties or multi-step edits, prefer execute_vf_actions with a compact action list.",
+          selectionHint,
+          boundsHint,
+          summaryHint,
+          selectionDsl ? `Current selected VF-DSL:\n${selectionDsl}` : "No selected VF-DSL available."
+        ].join("\n\n");
+      }
+
+      function createAssistantStreamingView() {
+        const wrapper = document.createElement("div");
+        wrapper.className = "msg assistant";
+        const time = new Date().toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" });
+        wrapper.innerHTML = `
+          <div class="msg-header">
+            <div class="role">AI (streaming)</div>
+            <div class="role">${time}</div>
+          </div>
+          <div class="msg-body"></div>
+          <details class="thinking">
+            <summary>Reasoning (live)</summary>
+            <pre></pre>
+          </details>
+          <details class="stream-trace">
+            <summary>Stream Trace</summary>
+          </details>
+        `;
+
+        const body = wrapper.querySelector(".msg-body");
+        const thinkingPre = wrapper.querySelector(".thinking pre");
+        const reasoningDetails = wrapper.querySelector(".thinking");
+        const trace = wrapper.querySelector(".stream-trace");
+        const textBuffer = { content: "", reasoning: "" };
+
+        chatEl.appendChild(wrapper);
+        scrollToBottomIfPinned();
+
+        function appendTraceLine(kind, text) {
+          if (text === "stream.chunk") return;
+          
+          const lastLine = trace.lastElementChild;
+          // If updating tool arguments, update the last line instead of appending
+          if (kind === "tool" && lastLine && lastLine.classList.contains("tool")) {
+            const lastText = lastLine.textContent;
+            // Simple heuristic: if the new text starts with the same tool name, it's likely an update
+            if (text.startsWith(lastText.split("(")[0])) {
+               lastLine.textContent = text;
+               return;
+            }
+          }
+
+          const line = document.createElement("div");
+          line.className = `stream-line ${kind}`;
+          line.textContent = text;
+          trace.appendChild(line);
+          if (trace.childElementCount > 60) {
+            trace.removeChild(trace.firstElementChild);
+          }
+        }
+
+        return {
+          addContent(delta) {
+            textBuffer.content += delta;
+            body.innerHTML = renderMarkdown(textBuffer.content || "...");
+            scrollToBottomIfPinned();
+          },
+          addReasoning(delta) {
+            textBuffer.reasoning += delta;
+            thinkingPre.textContent = textBuffer.reasoning;
+            appendTraceLine("reasoning", delta);
+            scrollToBottomIfPinned();
+          },
+          addTrace(kind, text) {
+            appendTraceLine(kind === "tool" ? "tool" : "event", text);
+            scrollToBottomIfPinned();
+          },
+          finalize() {
+            wrapper.querySelector(".role").textContent = "AI";
+            if (!textBuffer.reasoning.trim()) {
+              reasoningDetails.remove();
+            }
+            if (trace.childElementCount === 0) {
+              trace.remove();
+            }
+          }
+        };
+      }
+
+      function getMessagesForModel() {
+        const fromIndex = state.contextCutoffIndex === null
+          ? 0
+          : Math.max(0, Math.min(state.contextCutoffIndex, state.messages.length));
+
+        let working = state.messages.slice(fromIndex).slice(-MAX_CONTEXT_MESSAGES);
+        const imageMessageIndexes = working
+          .map((message, index) => ({ message, index }))
+          .filter(({ message }) => message.role === "user" && Array.isArray(message.content) && message.content.some((part) => part?.type === "image_url"))
+          .map(({ index }) => index);
+        const keepImageSet = new Set(imageMessageIndexes.slice(-MAX_PRESERVED_IMAGE_MESSAGES));
+
+        let modelMessages = working.map((message, index) => toModelMessage(message, keepImageSet.has(index)));
+
+        while (modelMessages.length > 6 && estimateMessagesChars(modelMessages) > MODEL_CONTEXT_CHAR_BUDGET) {
+          modelMessages.shift();
+        }
+
+        return modelMessages;
+      }
+
+      function toModelMessage(message, keepImages) {
+        if (!message || typeof message !== "object") {
+          return message;
+        }
+
+        if (message.role === "assistant") {
+          return {
+            role: "assistant",
+            content: typeof message.content === "string" ? message.content : "",
+            tool_calls: Array.isArray(message.tool_calls) ? message.tool_calls : []
+          };
+        }
+
+        if (message.role === "tool") {
+          return {
+            role: "tool",
+            tool_call_id: message.tool_call_id,
+            name: message.name,
+            content: sanitizeToolResultForContext(typeof message.content === "string" ? message.content : JSON.stringify(message.content))
+          };
+        }
+
+        if (message.role === "user" && Array.isArray(message.content)) {
+          const compactParts = [];
+          let omittedImageCount = 0;
+          for (const part of message.content) {
+            if (part?.type === "image_url") {
+              if (keepImages) {
+                compactParts.push(part);
+              } else {
+                omittedImageCount += 1;
+              }
+              continue;
+            }
+            if (part?.type === "text") {
+              compactParts.push({ type: "text", text: truncateText(String(part.text || ""), 1400) });
+              continue;
+            }
+            compactParts.push(part);
+          }
+          if (omittedImageCount > 0) {
+            compactParts.push({
+              type: "text",
+              text: `[${omittedImageCount} prior image(s) omitted from context to save tokens. Ask user to reattach if needed.]`
+            });
+          }
+          return {
+            role: "user",
+            content: compactParts
+          };
+        }
+
+        if (message.role === "user") {
+          return {
+            role: "user",
+            content: truncateText(typeof message.content === "string" ? message.content : "", 2400)
+          };
+        }
+
+        return message;
+      }
+
+      function estimateMessagesChars(messages) {
+        return messages.reduce((acc, message) => acc + estimateValueChars(message), 0);
+      }
+
+      function estimateValueChars(value) {
+        if (typeof value === "string") {
+          return value.length;
+        }
+        if (Array.isArray(value)) {
+          return value.reduce((acc, item) => acc + estimateValueChars(item), 0);
+        }
+        if (value && typeof value === "object") {
+          return Object.values(value).reduce((acc, item) => acc + estimateValueChars(item), 0);
+        }
+        return 0;
+      }
+
+      function truncateText(text, limit) {
+        if (text.length <= limit) {
+          return text;
+        }
+        return `${text.slice(0, limit)}\n...[truncated ${text.length - limit} chars]`;
+      }
+
+      function sanitizeToolResultForContext(text) {
+        return truncateText(text, TOOL_RESULT_CHAR_LIMIT);
+      }
+
+      function buildUserContent(text, images) {
+        if (images.length === 0) {
+          return text;
+        }
+
+        const parts = [];
+        if (text) {
+          parts.push({ type: "text", text });
+        }
+
+        for (const image of images) {
+          parts.push({
+            type: "image_url",
+            image_url: {
+              url: image.dataUrl,
+              detail: "auto"
+            }
+          });
+        }
+        return parts;
+      }
+
+      function normalizeEndpoint(baseUrl, suffix) {
+        let clean = baseUrl.replace(/\/+$/, "");
+        return `${clean}${suffix}`;
+      }
+
+      async function fetchModelList() {
+        const settings = readSettingsForm();
+        const endpoint = normalizeEndpoint(settings.baseUrl, "/models");
+        const response = await fetch(endpoint, {
+          headers: {
+            Authorization: `Bearer ${settings.apiKey}`
+          }
+        });
+        if (!response.ok) {
+          throw new Error(`HTTP ${response.status}`);
+        }
+        const data = await response.json();
+        return data.data || [];
+      }
+
+      function fillSettingsForm(settings) {
+        document.getElementById("provider").value = settings.provider;
+        document.getElementById("baseUrl").value = settings.baseUrl;
+        document.getElementById("apiKey").value = settings.apiKey;
+        document.getElementById("model").value = settings.model;
+        document.getElementById("temperature").value = settings.temperature;
+        document.getElementById("systemPrompt").value = settings.systemPrompt;
+      }
+
+      function readSettingsForm() {
+        return {
+          provider: document.getElementById("provider").value || "openai",
+          baseUrl: (document.getElementById("baseUrl").value || "https://api.openai.com/v1").trim(),
+          apiKey: (document.getElementById("apiKey").value || "").trim(),
+          model: (document.getElementById("model").value || "gpt-4o").trim(),
+          temperature: Math.max(0, Math.min(2, Number(document.getElementById("temperature").value || "0.4"))),
+          systemPrompt: document.getElementById("systemPrompt").value || "You are Viga, an expert Figma design agent."
+        };
+      }
+
+      function renderSelectionStatus() {
+        if (!state.selection) {
+          selectionStatusEl.textContent = "No selection context.";
+          return;
+        }
+        if (state.selection.selectionCount === 0) {
+          selectionStatusEl.textContent = `Global mode on ${state.selection.pageName}. Nothing selected.`;
+          return;
+        }
+        selectionStatusEl.textContent = `Selected ${state.selection.selectionCount} layer(s) on ${state.selection.pageName}.`;
+      }
+
+      function renderAttachmentChips() {
+        attachmentsEl.innerHTML = "";
+        for (const image of state.images) {
+          const chip = document.createElement("div");
+          chip.className = "chip";
+          chip.innerHTML = `${escapeHtml(image.name)} <button title="Remove">x</button>`;
+          chip.querySelector("button").addEventListener("click", () => {
+            state.images = state.images.filter((x) => x.id !== image.id);
+            renderAttachmentChips();
+          });
+          attachmentsEl.appendChild(chip);
+        }
+        refreshRuntimeStats();
+      }
+
+      function pushUiMessage(role, text, thinkingText) {
+        logUiEvent("ui.chat.message", {
+          role,
+          textLength: typeof text === "string" ? text.length : 0,
+          hasThinking: Boolean(thinkingText)
+        });
+        const wrapper = document.createElement("div");
+        wrapper.className = `msg ${role}`;
+        const time = new Date().toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" });
+        wrapper.innerHTML = `
+          <div class="msg-header">
+            <div class="role">${role === "assistant" ? "AI" : "You"}</div>
+            <div class="role">${time}</div>
+          </div>
+          <div class="msg-body">${renderMarkdown(text)}</div>
+        `;
+        if (thinkingText) {
+          const details = document.createElement("details");
+          details.className = "thinking";
+          details.innerHTML = `<summary>Reasoning</summary><pre>${escapeHtml(String(thinkingText))}</pre>`;
+          wrapper.appendChild(details);
+        }
+
+        chatEl.appendChild(wrapper);
+        scrollToBottomIfPinned();
+      }
+
+      function pushToolPanel() {
+        logUiEvent("ui.tool-panel.open", {});
+        const el = document.createElement("div");
+        el.className = "tool-runner";
+        el.innerHTML = `<div class="role" style="margin-bottom:6px;">Tool Calling</div>`;
+        chatEl.appendChild(el);
+        scrollToBottomIfPinned();
+        return el;
+      }
+
+      function addToolStatus(panel, status, text) {
+        logUiEvent("ui.tool-status", { status, text });
+        const line = document.createElement("div");
+        line.className = `tool-entry ${status}`;
+        line.textContent = `${status === "running" ? "[RUN]" : status === "done" ? "[OK]" : "[ERR]"} ${text}`;
+        panel.appendChild(line);
+        scrollToBottomIfPinned();
+      }
+
+      function waitForApproval(toolName, args) {
+        logUiEvent("ui.approval.requested", { toolName, args: summarizeForLog(args) });
+        return new Promise((resolve) => {
+          const box = document.createElement("div");
+          box.className = "msg assistant";
+          box.innerHTML = `
+            <div class="msg-header"><div class="role">Approve Changes</div></div>
+            <div class="msg-body">AI requests <code>${escapeHtml(toolName)}</code></div>
+            <div class="approve"><pre>${escapeHtml(JSON.stringify(args, null, 2))}</pre></div>
+            <div class="actions" style="margin-top:8px;">
+              <button class="btn primary">Approve</button>
+              <button class="btn warn">Reject</button>
+            </div>
+          `;
+
+          const [approveBtn, rejectBtn] = box.querySelectorAll("button");
+          approveBtn.addEventListener("click", () => {
+            box.remove();
+            logUiEvent("ui.approval.resolved", { toolName, approved: true });
+            resolve(true);
+          });
+          rejectBtn.addEventListener("click", () => {
+            box.remove();
+            logUiEvent("ui.approval.resolved", { toolName, approved: false });
+            resolve(false);
+          });
+
+          chatEl.appendChild(box);
+          scrollToBottomIfPinned(true);
+        });
+      }
+
+      function isChatNearBottom() {
+        const gap = chatEl.scrollHeight - chatEl.scrollTop - chatEl.clientHeight;
+        return gap <= AUTO_SCROLL_THRESHOLD;
+      }
+
+      function scrollToBottomIfPinned(force) {
+        if (force || state.autoScrollPinned) {
+          chatEl.scrollTop = chatEl.scrollHeight;
+        }
+      }
+
+      function requestPause() {
+        if (!state.running || state.stopRequested) {
+          logUiEvent("ui.pause.ignored", { running: state.running, stopRequested: state.stopRequested });
+          return;
+        }
+        state.stopRequested = true;
+        logUiEvent("ui.pause.requested", { hasAbortController: Boolean(state.streamAbortController) });
+        if (state.streamAbortController) {
+          state.streamAbortController.abort();
+        }
+        updateRunButtons();
+      }
+
+      function updateRunButtons() {
+        sendBtnEl.disabled = state.running;
+        pauseBtnEl.disabled = !state.running;
+        pauseBtnEl.textContent = state.stopRequested ? "Stopping..." : "Pause";
+      }
+
+      function toggleContextClean() {
+        if (state.contextCutoffIndex === null) {
+          state.contextCutoffIndex = state.messages.length;
+          logUiEvent("ui.context.cleaned", { cutoffIndex: state.contextCutoffIndex });
+          insertContextDivider();
+          notify("Context cleaned. Previous messages stay visible but are excluded from model context.");
+        } else {
+          logUiEvent("ui.context.restored", { previousCutoffIndex: state.contextCutoffIndex });
+          state.contextCutoffIndex = null;
+          removeContextDivider();
+          notify("Context restored. Full history is included again.");
+        }
+        updateCleanContextButton();
+        refreshRuntimeStats();
+      }
+
+      function updateCleanContextButton() {
+        cleanContextBtnEl.textContent = state.contextCutoffIndex === null ? "Clean Context" : "Restore Context";
+      }
+
+      function insertContextDivider() {
+        removeContextDivider();
+        const divider = document.createElement("div");
+        divider.className = "context-divider";
+        divider.textContent = "Context Cleaned";
+        state.contextDividerEl = divider;
+        chatEl.appendChild(divider);
+        scrollToBottomIfPinned();
+      }
+
+      function removeContextDivider() {
+        if (state.contextDividerEl && state.contextDividerEl.parentNode) {
+          state.contextDividerEl.parentNode.removeChild(state.contextDividerEl);
+        }
+        state.contextDividerEl = null;
+      }
+
+      function isAbortError(error) {
+        return error && (error.name === "AbortError" || String(error.message || "").includes("aborted"));
+      }
+
+      function renderMarkdown(text) {
+        if (!text) {
+          return "";
+        }
+
+        const escaped = escapeHtml(text);
+        return escaped
+          .replace(/```([\s\S]*?)```/g, (_, code) => `<pre><code>${code}</code></pre>`)
+          .replace(/`([^`]+)`/g, "<code>$1</code>")
+          .replace(/\*\*([^*]+)\*\*/g, "<strong>$1</strong>")
+          .replace(/\n/g, "<br>");
+      }
+
+      function escapeHtml(value) {
+        return String(value)
+          .replace(/&/g, "&amp;")
+          .replace(/</g, "&lt;")
+          .replace(/>/g, "&gt;")
+          .replace(/"/g, "&quot;")
+          .replace(/'/g, "&#39;");
+      }
+
+      function notify(message, error) {
+        logUiEvent("ui.notify", { message, error: Boolean(error) });
+        rpc("notify", { message, error }).catch(() => {
+          pushUiMessage("assistant", message);
+        });
+      }
+
+      function formatUiError(error) {
+        if (!error) {
+          return "Unknown error";
+        }
+        if (error instanceof Error) {
+          const stackLine = typeof error.stack === "string" ? error.stack.split("\n")[1]?.trim() || "" : "";
+          return stackLine ? `${error.message} (${stackLine})` : error.message;
+        }
+        return String(error);
+      }
+
+      function refreshRuntimeStats() {
+        if (!runtimeStatsEl) {
+          return;
+        }
+        const activeMessages = getMessagesForModel();
+        const approxChars = estimateMessagesChars(activeMessages);
+        const imageCount = state.images.length;
+        const contextState = state.contextCutoffIndex === null ? "full" : "cleaned";
+        runtimeStatsEl.textContent = `Context: ${activeMessages.length} msgs, ~${approxChars} chars (${contextState})${imageCount ? `, attachments ${imageCount}` : ""}`;
+      }
+
+      async function exportRuntimeLog() {
+        logUiEvent("ui.log-export.requested", {
+          uiLogEntries: state.uiRuntimeLog.length,
+          messageCount: state.messages.length
+        });
+
+        try {
+          const plugin = await rpc("get-runtime-log", {});
+          const pluginEntries = Array.isArray(plugin?.entries) ? plugin.entries : [];
+          const merged = mergeRuntimeLogs(pluginEntries, state.uiRuntimeLog);
+          const exportedAt = new Date().toISOString();
+          const payload = {
+            schemaVersion: "v1",
+            exportedAt,
+            plugin: {
+              source: plugin?.source || "plugin",
+              exportedAt: plugin?.exportedAt || exportedAt,
+              entryCount: pluginEntries.length
+            },
+            ui: {
+              sessionStartedAt: state.sessionStartedAt,
+              entryCount: state.uiRuntimeLog.length,
+              messageCount: state.messages.length
+            },
+            selectionSnapshot: summarizeForLog(state.selection),
+            settingsSnapshot: {
+              provider: state.settings?.provider || "openai",
+              baseUrl: state.settings?.baseUrl || "",
+              model: state.settings?.model || "",
+              temperature: state.settings?.temperature,
+              hasApiKey: Boolean(state.settings?.apiKey),
+              systemPromptLength: typeof state.settings?.systemPrompt === "string" ? state.settings.systemPrompt.length : 0
+            },
+            conversationSnapshot: summarizeConversationForLog(state.messages),
+            runtime: merged
+          };
+
+          const fileName = `viga-runtime-log-${toSafeTimestamp(exportedAt)}.json`;
+          downloadJson(payload, fileName);
+          logUiEvent("ui.log-export.done", {
+            fileName,
+            mergedEntries: merged.length,
+            pluginEntries: pluginEntries.length,
+            uiEntries: state.uiRuntimeLog.length
+          });
+          notify(`Runtime log exported: ${fileName}`);
+        } catch (error) {
+          logUiEvent("ui.log-export.failed", { error });
+          notify(`Export log failed: ${formatUiError(error)}`, true);
+        }
+      }
+
+      function rpc(action, payload) {
+        return new Promise((resolve, reject) => {
+          const requestId = `rpc_${Date.now()}_${state.requestCounter++}`;
+          const startedAt = Date.now();
+          state.rpcPending.set(requestId, { resolve, reject, action, startedAt });
+          logUiEvent("rpc.request.sent", {
+            requestId,
+            action,
+            payload: summarizeForLog(payload)
+          });
+          parent.postMessage(
+            {
+              pluginMessage: {
+                type: "rpc-request",
+                requestId,
+                action,
+                payload
+              }
+            },
+            "*"
+          );
+
+          setTimeout(() => {
+            if (state.rpcPending.has(requestId)) {
+              state.rpcPending.delete(requestId);
+              logUiEvent("rpc.request.timeout", {
+                requestId,
+                action,
+                timeoutMs: 60000
+              });
+              reject(new Error(`RPC timeout: ${action}`));
+            }
+          }, 60000);
+        });
+      }
+
+      function fileToDataUrl(file) {
+        logUiEvent("ui.image.read.start", { name: file?.name || "", size: file?.size || 0, type: file?.type || "" });
+        return new Promise((resolve, reject) => {
+          const reader = new FileReader();
+          reader.onload = () => {
+            const result = String(reader.result);
+            logUiEvent("ui.image.read.done", {
+              name: file?.name || "",
+              size: file?.size || 0,
+              dataUrlLength: result.length
+            });
+            resolve(result);
+          };
+          reader.onerror = () => {
+            logUiEvent("ui.image.read.failed", { name: file?.name || "" });
+            reject(new Error("Image read failed."));
+          };
+          reader.readAsDataURL(file);
+        });
+      }
+
+      function bytesToDataUrl(bytes, mimeType) {
+        const array = bytes instanceof Uint8Array ? bytes : new Uint8Array(bytes);
+        logUiEvent("ui.snapshot.convert.start", { mimeType, byteLength: array.length });
+        return new Promise((resolve, reject) => {
+          const blob = new Blob([array], { type: mimeType || "image/png" });
+          const reader = new FileReader();
+          reader.onload = () => {
+            const dataUrl = String(reader.result);
+            logUiEvent("ui.snapshot.convert.done", { mimeType, dataUrlLength: dataUrl.length });
+            resolve(dataUrl);
+          };
+          reader.onerror = () => {
+            logUiEvent("ui.snapshot.convert.failed", { mimeType });
+            reject(new Error("Snapshot conversion failed."));
+          };
+          reader.readAsDataURL(blob);
+        });
+      }
+
+      function logUiEvent(event, detail) {
+        const timestampMs = Date.now();
+        const entry = {
+          source: "ui",
+          seq: ++state.uiLogCounter,
+          timestamp: new Date(timestampMs).toISOString(),
+          timestampMs,
+          event,
+          detail: sanitizeForLog(detail)
+        };
+        state.uiRuntimeLog.push(entry);
+        if (state.uiRuntimeLog.length > MAX_UI_RUNTIME_LOG_ENTRIES) {
+          state.uiRuntimeLog.splice(0, state.uiRuntimeLog.length - MAX_UI_RUNTIME_LOG_ENTRIES);
+        }
+      }
+
+      function sanitizeForLog(value, depth = 0) {
+        if (depth > 6) {
+          return "[depth-truncated]";
+        }
+        if (value == null) {
+          return value;
+        }
+        if (typeof value === "string") {
+          if (value.length > 2000) {
+            return `${value.slice(0, 2000)}...[truncated ${value.length - 2000} chars]`;
+          }
+          return value;
+        }
+        if (typeof value === "number" || typeof value === "boolean") {
+          return value;
+        }
+        if (value instanceof Uint8Array) {
+          return { type: "Uint8Array", length: value.length };
+        }
+        if (value instanceof Error) {
+          return {
+            name: value.name,
+            message: value.message,
+            stack: typeof value.stack === "string" ? value.stack.split("\n").slice(0, 8) : []
+          };
+        }
+        if (Array.isArray(value)) {
+          const capped = value.slice(0, 40).map((item) => sanitizeForLog(item, depth + 1));
+          if (value.length > 40) {
+            capped.push(`[truncated ${value.length - 40} items]`);
+          }
+          return capped;
+        }
+        if (typeof value === "object") {
+          const keys = Object.keys(value);
+          const result = {};
+          const cappedKeys = keys.slice(0, 60);
+          for (const key of cappedKeys) {
+            if (isSensitiveKey(key)) {
+              result[key] = "[REDACTED]";
+            } else {
+              result[key] = sanitizeForLog(value[key], depth + 1);
+            }
+          }
+          if (keys.length > 60) {
+            result.__truncatedKeys = keys.length - 60;
+          }
+          return result;
+        }
+        return String(value);
+      }
+
+      function isSensitiveKey(key) {
+        return /api[_-]?key|authorization|token|secret|password/i.test(String(key || ""));
+      }
+
+      function summarizeForLog(value) {
+        if (value && typeof value === "object" && "bytes" in value) {
+          const bytes = value.bytes;
+          const byteLength = bytes instanceof Uint8Array ? bytes.length : Array.isArray(bytes) ? bytes.length : 0;
+          return sanitizeForLog({ ...value, bytes: { type: "binary", length: byteLength } });
+        }
+        return sanitizeForLog(value);
+      }
+
+      function summarizeConversationForLog(messages) {
+        return messages.map((message, index) => {
+          if (!message || typeof message !== "object") {
+            return { index, invalid: true };
+          }
+          const item = {
+            index,
+            role: message.role || "unknown"
+          };
+
+          if (typeof message.content === "string") {
+            item.contentLength = message.content.length;
+            item.contentPreview = truncateText(message.content, 280);
+          } else if (Array.isArray(message.content)) {
+            item.contentParts = message.content.length;
+            item.content = message.content.map((part) => {
+              if (part?.type === "text") {
+                return { type: "text", length: String(part.text || "").length, preview: truncateText(String(part.text || ""), 180) };
+              }
+              if (part?.type === "image_url") {
+                return { type: "image_url", detail: part.image_url?.detail || "auto", urlLength: String(part.image_url?.url || "").length };
+              }
+              return sanitizeForLog(part);
+            });
+          }
+
+          if (Array.isArray(message.tool_calls)) {
+            item.toolCalls = message.tool_calls.map((call) => ({
+              id: call?.id,
+              type: call?.type,
+              name: call?.function?.name,
+              argumentsLength: typeof call?.function?.arguments === "string" ? call.function.arguments.length : 0
+            }));
+          }
+
+          if (message.role === "tool") {
+            item.toolCallId = message.tool_call_id;
+            item.toolName = message.name;
+          }
+
+          return item;
+        });
+      }
+
+      function toSafeTimestamp(iso) {
+        return String(iso || "").replace(/[:.]/g, "-");
+      }
+
+      function downloadJson(data, fileName) {
+        const blob = new Blob([JSON.stringify(data, null, 2)], { type: "application/json" });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement("a");
+        a.href = url;
+        a.download = fileName;
+        document.body.appendChild(a);
+        a.click();
+        a.remove();
+        URL.revokeObjectURL(url);
+      }
+
+      function mergeRuntimeLogs(pluginEntries, uiEntries) {
+        const normalized = [];
+        for (const entry of Array.isArray(pluginEntries) ? pluginEntries : []) {
+          normalized.push(normalizeRuntimeEntry(entry, "plugin"));
+        }
+        for (const entry of Array.isArray(uiEntries) ? uiEntries : []) {
+          normalized.push(normalizeRuntimeEntry(entry, "ui"));
+        }
+
+        normalized.sort((a, b) => {
+          if (a.timestampMs !== b.timestampMs) {
+            return a.timestampMs - b.timestampMs;
+          }
+          if (a.source === b.source) {
+            return a.seq - b.seq;
+          }
+          return a.source === "plugin" ? -1 : 1;
+        });
+
+        return normalized.map((entry, index) => ({
+          ...entry,
+          mergedIndex: index + 1
+        }));
+      }
+
+      function normalizeRuntimeEntry(entry, fallbackSource) {
+        const source = entry?.source === "plugin" || entry?.source === "ui" ? entry.source : fallbackSource;
+        const timestampMs = Number.isFinite(Number(entry?.timestampMs)) ? Number(entry.timestampMs) : Date.now();
+        const seq = Number.isFinite(Number(entry?.seq)) ? Number(entry.seq) : 0;
+        return {
+          source,
+          seq,
+          timestamp: typeof entry?.timestamp === "string" ? entry.timestamp : new Date(timestampMs).toISOString(),
+          timestampMs,
+          event: typeof entry?.event === "string" ? entry.event : "unknown",
+          detail: sanitizeForLog(entry?.detail)
+        };
+      }
+
+      void init();
+    </script>
+  </body>
+</html>

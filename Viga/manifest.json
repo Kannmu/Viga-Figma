@@ -12,7 +12,8 @@
   "ui": "ui.html",
   "networkAccess": {
     "allowedDomains": [
-      "none"
-    ]
+      "*"
+    ],
+    "reasoning": "Plugin supports user-configurable BaseURL for ZenMux and OpenAI-compatible providers, so outbound requests must allow arbitrary domains configured by the user."
   }
 }
